@@ -140,6 +140,30 @@
       @apply text-gray-100 font-medium text-base;
     }
   }
+
+  .pagination {
+    @apply flex justify-center items-center gap-4 mt-10;
+
+    & button {
+      @apply px-4 py-2 bg-dark-100 text-white rounded border border-gray-700 transition-all duration-200;
+    }
+
+    & button:not(:disabled) {
+      @apply cursor-pointer;
+    }
+
+    & button:not(:disabled):hover {
+      box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+    }
+
+    & button:disabled {
+      @apply opacity-50;
+    }
+
+    & span {
+      @apply text-gray-300 font-medium;
+    }
+  }
 }
 
 @utility text-gradient {

@@ -4,6 +4,7 @@ import {useDebounce} from "react-use";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
+import Pagination from "./components/Pagination";
 import {getTrendingMovies, updateSearchCount} from "./appwrite";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
@@ -26,18 +27,21 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
-  const fetchMovies = async (query = "") => {
+  const fetchMovies = async (query = "", pageNumber = 1) => {
     setIsLoading(true);
     setErrorMessage("");
 
     try {
       const endpoint = query
-        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
-        : `${API_BASE_URL}/discover/movie`;
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${pageNumber}`
+        : `${API_BASE_URL}/discover/movie?page=${pageNumber}`;
 
       const response = await fetch(endpoint, API_OPTIONS);
 
@@ -47,13 +51,8 @@ const App = () => {
 
       const data = await response.json();
 
-      if (data.Response === "False") {
-        setErrorMessage(data.Error || "Failed to fetch movies");
-        setMovieList([]);
-        return;
-      }
-
       setMovieList(data.results || []);
+      setTotalPages(data.total_pages || 1);
 
       if (query && data.results.length > 0) {
         await updateSearchCount(query, data.results[0]);
@@ -77,12 +76,16 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetchMovies(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
+    fetchMovies(debouncedSearchTerm, page);
+  }, [debouncedSearchTerm, page]);
 
   useEffect(() => {
     loadTrendingMovies();
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearchTerm]);
 
   return (
     <main>
@@ -127,6 +130,8 @@ const App = () => {
             </ul>
           )}
         </section>
+
+        <Pagination page={page} totalPages={totalPages} setPage={setPage} />
       </div>
     </main>
   );
