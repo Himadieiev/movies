@@ -1,8 +1,9 @@
 const MovieCard = ({
   movie: {title, vote_average, poster_path, release_date, original_language},
+  index,
 }) => {
   return (
-    <li className="movie-card">
+    <li className="movie-card fade-in-item" style={{"--i": index}}>
       <img
         src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : "/no-movie.png"}
         alt={title}

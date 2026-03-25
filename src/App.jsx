@@ -124,8 +124,8 @@ const App = () => {
             <p className="text-red-500">{errorMessage}</p>
           ) : (
             <ul>
-              {movieList.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
+              {movieList.map((movie, index) => (
+                <MovieCard key={movie.id} movie={movie} index={index} />
               ))}
             </ul>
           )}
