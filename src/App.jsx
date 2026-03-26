@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useDebounce} from "react-use";
 
 import Search from "./components/Search";
@@ -32,6 +32,9 @@ const App = () => {
 
   const [trendingMovies, setTrendingMovies] = useState([]);
 
+  const moviesRef = useRef(null);
+  const isFirstLoad = useRef(true);
+
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   const fetchMovies = async (query = "", pageNumber = 1) => {
@@ -57,6 +60,8 @@ const App = () => {
       if (query && data.results.length > 0) {
         await updateSearchCount(query, data.results[0]);
       }
+
+      isFirstLoad.current = false;
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Error fetching movies. Please try again later.");
@@ -87,6 +92,15 @@ const App = () => {
     setPage(1);
   }, [debouncedSearchTerm]);
 
+  useEffect(() => {
+    if (page === 1) return;
+
+    moviesRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [page]);
+
   return (
     <main>
       <div className="pattern" />
@@ -115,18 +129,30 @@ const App = () => {
           </section>
         )}
 
-        <section className="all-movies">
+        <section className="all-movies" ref={moviesRef}>
           <h2 className="mt-10">All Movies</h2>
 
-          {isLoading ? (
-            <Spinner />
-          ) : errorMessage ? (
+          {errorMessage ? (
             <p className="text-red-500">{errorMessage}</p>
           ) : (
             <ul>
-              {movieList.map((movie, index) => (
-                <MovieCard key={movie.id} movie={movie} index={index} />
-              ))}
+              {isLoading
+                ? Array.from({length: 20}).map((_, i) => (
+                    <li key={i} className="movie-card">
+                      <div className="skeleton-poster" />
+                      <div className="mt-4 space-y-2">
+                        <div className="skeleton-line h-4 w-3/4" />
+                        <div className="skeleton-line h-4 w-1/2" />
+                      </div>
+                    </li>
+                  ))
+                : movieList.map((movie, index) => (
+                    <MovieCard
+                      key={movie.id}
+                      movie={movie}
+                      index={isFirstLoad.current ? index : 0}
+                    />
+                  ))}
             </ul>
           )}
         </section>

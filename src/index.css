@@ -105,7 +105,9 @@
     @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
 
     & img {
-      @apply rounded-lg h-auto w-full;
+      @apply rounded-lg w-full block object-cover;
+
+      aspect-ratio: 2 / 3;
     }
 
     & h3 {
@@ -177,6 +179,32 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  .skeleton-poster {
+    @apply w-full rounded-lg;
+
+    aspect-ratio: 2 / 3;
+    background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 37%, #1f1f1f 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.2s infinite;
+  }
+
+  .skeleton-line {
+    @apply rounded;
+
+    background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 37%, #1f1f1f 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: 0 0;
     }
   }
 }
