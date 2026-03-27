@@ -60,8 +60,16 @@
   .trending {
     @apply mt-20;
 
+    & .trending-content {
+      @apply h-[285px] flex items-center justify-center;
+    }
+
+    & .no-poster {
+      @apply w-[127px] h-[163px] flex justify-center items-center text-white rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)] bg-gray-700;
+    }
+
     & ul {
-      @apply flex flex-row justify-between overflow-x-auto gap-5 -mt-10 w-full scrollbar-custom;
+      @apply flex flex-row overflow-x-auto gap-5 w-full scrollbar-custom;
     }
 
     & ul li {
@@ -69,7 +77,7 @@
     }
 
     & ul li p {
-      @apply fancy-text mt-[22px] text-nowrap;
+      @apply fancy-text text-nowrap;
     }
 
     & ul li img {

@@ -31,6 +31,8 @@ const App = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [trendingError, setTrendingError] = useState("");
+  const [isTrendingLoading, setIsTrendingLoading] = useState(false);
 
   const moviesRef = useRef(null);
   const isFirstLoad = useRef(true);
@@ -71,12 +73,18 @@ const App = () => {
   };
 
   const loadTrendingMovies = async () => {
+    setIsTrendingLoading(true);
+    setTrendingError("");
+
     try {
       const movies = await getTrendingMovies();
 
       setTrendingMovies(movies);
     } catch (error) {
       console.error(`Error fetching trending movies: ${error}`);
+      setTrendingError("Error fetching trending movies.");
+    } finally {
+      setIsTrendingLoading(false);
     }
   };
 
@@ -114,20 +122,33 @@ const App = () => {
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
 
-        {trendingMovies.length > 0 && (
-          <section className="trending">
-            <h2>Trending Movies</h2>
+        <section className="trending">
+          <h2>Trending Movies</h2>
 
-            <ul>
-              {trendingMovies.map((movie, index) => (
-                <li key={movie.$id}>
-                  <p>{index + 1}</p>
-                  <img src={movie.poster_url} alt={movie.title} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+          <div className="trending-content">
+            {isTrendingLoading ? (
+              <Spinner />
+            ) : trendingError ? (
+              <p className="text-red-500">{trendingError}</p>
+            ) : trendingMovies.length === 0 ? (
+              <p className="text-gray-400">No trending movies yet.</p>
+            ) : (
+              <ul className={trendingMovies.length < 5 ? "justify-start" : "justify-between"}>
+                {trendingMovies.map((movie, index) => (
+                  <li key={movie.$id}>
+                    <p>{index + 1}</p>
+
+                    {movie.poster_url && !movie.poster_url.includes("null") ? (
+                      <img src={movie.poster_url} alt={movie.title} />
+                    ) : (
+                      <div className="no-poster">No Poster</div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
 
         <section className="all-movies" ref={moviesRef}>
           <h2 className="mt-10">All Movies</h2>
