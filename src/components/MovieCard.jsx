@@ -1,8 +1,30 @@
 const MovieCard = ({movie, index, onClick}) => {
   const {title, vote_average, poster_path, release_date, original_language} = movie;
 
+  const handleMouseUp = () => {
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) {
+      return;
+    }
+
+    onClick();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
-    <li className="movie-card fade-in-item" style={{"--i": index}} onClick={onClick}>
+    <li
+      className="movie-card fade-in-item"
+      style={{"--i": index}}
+      onMouseUp={handleMouseUp}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
       <img
         src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : "/no-movie.png"}
         alt={title}

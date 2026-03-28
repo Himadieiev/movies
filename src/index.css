@@ -61,11 +61,11 @@
     @apply mt-20;
 
     & .trending-content {
-      @apply h-[285px] flex items-center justify-center;
+      @apply h-[247px] flex items-center justify-center;
     }
 
     & .no-poster {
-      @apply w-[127px] h-[163px] p-1 flex flex-col gap-1 justify-center items-center text-white text-[12px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)] bg-gray-700;
+      @apply w-[127px] h-[170px] p-1 flex flex-col gap-1 justify-center items-center text-white text-[12px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)] bg-gray-700;
 
       & .no-poster-title {
         @apply text-sm text-center line-clamp-4;
@@ -86,7 +86,7 @@
     }
 
     & ul li img {
-      @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)];
+      @apply w-[127px] h-[170px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)];
     }
   }
 
@@ -115,7 +115,16 @@
   }
 
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10 transition-all duration-200 cursor-pointer;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px #eae5f8;
+    }
+
+    &:hover {
+      box-shadow: 0 0 15px #ab8bff;
+    }
 
     & img {
       @apply rounded-lg w-full block object-cover;
