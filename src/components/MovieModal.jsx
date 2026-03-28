@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const FAVORITES_KEY = "favorite_movies";
 
@@ -16,6 +16,23 @@ const MovieModal = ({movie, onClose}) => {
     return favorites.some((f) => f.id === movie.id);
   });
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleEsc);
+    };
+  }, [onClose]);
+
   const {title, vote_average, poster_path, release_date, original_language, overview} = movie;
 
   const toggleFavorite = () => {
@@ -29,6 +46,11 @@ const MovieModal = ({movie, onClose}) => {
       localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites, movie]));
       setIsFavorite(true);
     }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
+    return new Date(dateString).toLocaleDateString("uk-UA");
   };
 
   return (
@@ -55,7 +77,7 @@ const MovieModal = ({movie, onClose}) => {
 
             <p className="lang">{original_language?.toUpperCase()}</p>
 
-            <p className="year">{release_date || "N/A"}</p>
+            <p className="year">{formatDate(release_date)}</p>
           </div>
         </div>
 
