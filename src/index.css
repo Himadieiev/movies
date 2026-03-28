@@ -65,7 +65,12 @@
     }
 
     & .no-poster {
-      @apply w-[127px] h-[163px] flex justify-center items-center text-white rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)] bg-gray-700;
+      @apply w-[127px] h-[163px] p-1 flex flex-col gap-1 justify-center items-center text-white text-[12px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-[0_0_6px_rgba(255,255,255,0.3)] bg-gray-700;
+
+      & .no-poster-title {
+        @apply text-sm text-center line-clamp-4;
+        color: #ab8bff;
+      }
     }
 
     & ul {
@@ -303,6 +308,7 @@
   -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
   font-size: 190px;
   font-family: "Bebas Neue", sans-serif;
+  line-height: 1.3;
 }
 
 @utility scrollbar-custom {

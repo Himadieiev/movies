@@ -33,12 +33,12 @@ const App = () => {
 
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [trendingError, setTrendingError] = useState("");
-  const [isTrendingLoading, setIsTrendingLoading] = useState(false);
+  const [isTrendingLoading, setIsTrendingLoading] = useState(true);
+
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const moviesRef = useRef(null);
   const isFirstLoad = useRef(true);
-
-  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
@@ -144,7 +144,10 @@ const App = () => {
                     {movie.poster_url && !movie.poster_url.includes("null") ? (
                       <img src={movie.poster_url} alt={movie.title} />
                     ) : (
-                      <div className="no-poster">No Poster</div>
+                      <div className="no-poster">
+                        <span>No Poster</span>
+                        <span className="no-poster-title">{movie.movie_title}</span>
+                      </div>
                     )}
                   </li>
                 ))}
