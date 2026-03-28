@@ -5,6 +5,7 @@ import Search from "./components/Search";
 import Spinner from "./components/Spinner";
 import MovieCard from "./components/MovieCard";
 import Pagination from "./components/Pagination";
+import MovieModal from "./components/MovieModal";
 import {getTrendingMovies, updateSearchCount} from "./appwrite";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
@@ -36,6 +37,8 @@ const App = () => {
 
   const moviesRef = useRef(null);
   const isFirstLoad = useRef(true);
+
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
@@ -172,6 +175,7 @@ const App = () => {
                       key={movie.id}
                       movie={movie}
                       index={isFirstLoad.current ? index : 0}
+                      onClick={() => setSelectedMovie(movie)}
                     />
                   ))}
             </ul>
@@ -180,6 +184,8 @@ const App = () => {
 
         <Pagination page={page} totalPages={totalPages} setPage={setPage} />
       </div>
+
+      {selectedMovie && <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />}
     </main>
   );
 };
