@@ -1,9 +1,11 @@
 import {useEffect, useRef, useState} from "react";
+import {BrowserRouter} from "react-router-dom";
 
 import {fetchMoviesFromTMDB} from "./services/tmdb";
 import {getTrendingMovies, updateSearchCount} from "./services/appwrite";
-import MovieModal from "./components/MovieModal";
 import HomePage from "./pages/HomePage";
+import MovieModal from "./components/MovieModal";
+import Navigation from "./components/Navigation";
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -77,29 +79,35 @@ const App = () => {
   }, []);
 
   return (
-    <main>
-      <div className="pattern" />
-      <div className="wrapper">
-        <HomePage
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          trendingMovies={trendingMovies}
-          trendingError={trendingError}
-          isTrendingLoading={isTrendingLoading}
-          movieList={movieList}
-          isLoading={isLoading}
-          isFirstLoad={isFirstLoad.current}
-          errorMessage={errorMessage}
-          onMovieClick={setSelectedMovie}
-          page={page}
-          totalPages={totalPages}
-          setPage={setPage}
-          onPageChange={handleSearch}
-        />
-      </div>
+    <BrowserRouter>
+      <main>
+        <div className="pattern" />
+        <div className="wrapper">
+          <Navigation />
 
-      {selectedMovie && <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />}
-    </main>
+          <HomePage
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            trendingMovies={trendingMovies}
+            trendingError={trendingError}
+            isTrendingLoading={isTrendingLoading}
+            movieList={movieList}
+            isLoading={isLoading}
+            isFirstLoad={isFirstLoad.current}
+            errorMessage={errorMessage}
+            onMovieClick={setSelectedMovie}
+            page={page}
+            totalPages={totalPages}
+            setPage={setPage}
+            onPageChange={handleSearch}
+          />
+        </div>
+
+        {selectedMovie && (
+          <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
+        )}
+      </main>
+    </BrowserRouter>
   );
 };
 

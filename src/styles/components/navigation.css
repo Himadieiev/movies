@@ -1,0 +1,22 @@
+@layer components {
+  .nav {
+    @apply flex gap-8;
+  }
+
+  .nav-link {
+    @apply text-gray-400 hover:text-white text-lg font-semibold transition-colors relative;
+  }
+
+  .nav-link.active {
+    @apply text-white;
+  }
+
+  .nav-link.active::after {
+    @apply absolute bottom-0 left-0 w-full h-[1px] bg-white;
+
+    content: "";
+    transform: scaleX(0);
+    transform-origin: center;
+    animation: underlineGrow 0.3s ease forwards;
+  }
+}

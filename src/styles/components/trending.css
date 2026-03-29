@@ -3,7 +3,7 @@
     @apply mt-20;
 
     & .trending-content {
-      @apply h-[247px] flex items-center justify-center;
+      @apply h-[260px] flex items-center justify-center;
     }
 
     & .no-poster {

@@ -14,6 +14,15 @@
   }
 }
 
+@keyframes underlineGrow {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
 .fade-in-item {
   opacity: 0;
   transform: translateY(10px);
