@@ -3,6 +3,10 @@ import {useEffect, useState} from "react";
 const Search = ({searchTerm, setSearchTerm}) => {
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 425px)").matches);
 
+  const handleClear = () => {
+    setSearchTerm("");
+  };
+
   useEffect(() => {
     const media = window.matchMedia("(max-width: 425px)");
 
@@ -24,6 +28,12 @@ const Search = ({searchTerm, setSearchTerm}) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+
+        {searchTerm && (
+          <button onClick={handleClear} aria-label="Clear search" type="button">
+            ✕
+          </button>
+        )}
       </div>
     </div>
   );
