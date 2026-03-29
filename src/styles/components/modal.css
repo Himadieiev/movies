@@ -1,0 +1,79 @@
+@layer components {
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    @apply relative bg-gray-900 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6;
+    box-shadow: var(--shadow-modal);
+  }
+
+  .modal-close {
+    @apply absolute top-2 right-3 z-10 text-white cursor-pointer border-none bg-transparent text-xl font-bold transition-all duration-200;
+
+    &:hover {
+      color: var(--color-purple);
+    }
+  }
+
+  .modal-layout {
+    @apply flex gap-6 mb-6;
+  }
+
+  .modal-poster {
+    @apply w-32 rounded-lg object-cover flex-shrink-0 border border-gray-700 shadow-poster;
+    aspect-ratio: var(--aspect-poster);
+  }
+
+  .modal-details {
+    @apply flex flex-col gap-2 flex-1;
+
+    & h2 {
+      @apply text-white font-bold text-xl mb-1;
+    }
+
+    & .rating {
+      @apply flex items-center gap-1;
+
+      & img {
+        @apply w-4 h-4 object-contain;
+      }
+
+      & p {
+        @apply font-bold text-base text-white;
+      }
+    }
+
+    & .lang {
+      @apply text-gray-300 font-medium text-sm;
+    }
+
+    & .year {
+      @apply text-gray-300 text-sm;
+    }
+  }
+
+  .modal-overview {
+    @apply text-gray-200 text-sm leading-relaxed mb-6;
+  }
+
+  .modal-favorite {
+    @apply w-auto min-w-[200px] mx-auto py-2.5 px-6 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200;
+    background: rgba(206, 206, 251, 0.1);
+    color: var(--color-light-100);
+
+    &:hover {
+      background: rgba(206, 206, 251, 0.2);
+    }
+
+    &.modal-favorite--active {
+      background: rgba(171, 139, 255, 0.15);
+      color: var(--color-purple);
+
+      &:hover {
+        background: rgba(171, 139, 255, 0.25);
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #030014;
+  --color-light-100: #cecefb;
+  --color-light-200: #a8b5db;
+  --color-gray-100: #9ca4ab;
+  --color-gray-200: #eae5f8;
+  --color-gray-300: #9ca4ab;
+  --color-dark-100: #0f0d23;
+  --color-dark-200: #1f1f1f;
+  --color-dark-300: #2a2a2a;
+  --color-purple: #ab8bff;
+  --color-purple-light: #d6c7ff;
+
+  --font-dm-sans: DM Sans, sans-serif;
+  --font-bebas: Bebas Neue, sans-serif;
+
+  --breakpoint-xs: 480px;
+
+  --background-image-hero-pattern: url("/hero-bg.png");
+
+  --shadow-card: 0 0 15px var(--color-purple);
+  --shadow-card-hover: 0 0 15px var(--color-purple);
+  --shadow-modal: 0 0 5px rgba(255, 255, 255, 0.5);
+  --shadow-poster: 0 0 6px rgba(255, 255, 255, 0.3);
+  --shadow-pagination: 0 0 6px rgba(255, 255, 255, 0.3);
+  --shadow-focus: 0 0 5px var(--color-gray-200);
+
+  --aspect-poster: 2 / 3;
+
+  --animation-shimmer: shimmer 1.2s infinite;
+  --animation-fade: fadeItem 0.4s ease forwards;
+}

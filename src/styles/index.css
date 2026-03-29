@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+@import "./theme.css";
+@import "./base.css";
+@import "./utilities.css";
+@import "./animations.css";
+
+@import "./components/layout.css";
+@import "./components/trending.css";
+@import "./components/search.css";
+@import "./components/movie-card.css";
+@import "./components/all-movies.css";
+@import "./components/pagination.css";
+@import "./components/modal.css";

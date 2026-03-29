@@ -1,0 +1,34 @@
+@layer components {
+  .trending {
+    @apply mt-20;
+
+    & .trending-content {
+      @apply h-[247px] flex items-center justify-center;
+    }
+
+    & .no-poster {
+      @apply w-[127px] h-[170px] p-1 flex flex-col gap-1 justify-center items-center text-white text-[12px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-poster bg-gray-700;
+
+      & .no-poster-title {
+        @apply text-sm text-center line-clamp-4;
+        color: var(--color-purple);
+      }
+    }
+
+    & ul {
+      @apply flex flex-row overflow-x-auto gap-5 w-full scrollbar-custom;
+    }
+
+    & ul li {
+      @apply min-w-[220px] flex flex-row items-center justify-center;
+    }
+
+    & ul li p {
+      @apply fancy-text text-nowrap;
+    }
+
+    & ul li img {
+      @apply w-[127px] h-[170px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-poster;
+    }
+  }
+}
