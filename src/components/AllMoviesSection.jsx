@@ -1,36 +1,52 @@
-import {forwardRef} from "react";
+import {useEffect, useRef} from "react";
 
 import MoviesGrid from "./MoviesGrid";
 import Pagination from "./Pagination";
 
-const AllMoviesSection = forwardRef(
-  (
-    {movieList, isLoading, isFirstLoad, errorMessage, onMovieClick, page, totalPages, setPage},
-    ref,
-  ) => {
-    const showPagination = !errorMessage && !isLoading && movieList.length > 0;
+const AllMoviesSection = ({
+  movieList,
+  isLoading,
+  errorMessage,
+  onMovieClick,
+  page,
+  totalPages,
+  setPage,
+}) => {
+  const showPagination = !errorMessage && !isLoading && movieList.length > 0;
+  const sectionRef = useRef(null);
+  const pendingScroll = useRef(false);
 
-    return (
-      <section className="all-movies" ref={ref}>
-        <h2 className="mt-10">All Movies</h2>
+  const handlePageChange = (newPage) => {
+    if (newPage !== page) {
+      setPage(newPage);
+      pendingScroll.current = true;
+    }
+  };
 
-        {errorMessage ? (
-          <p className="text-red-500">{errorMessage}</p>
-        ) : movieList.length === 0 && !isLoading ? (
-          <p className="text-gray-400 text-center py-20">No movies found. Try another search.</p>
-        ) : (
-          <MoviesGrid
-            movieList={movieList}
-            isLoading={isLoading}
-            isFirstLoad={isFirstLoad}
-            onMovieClick={onMovieClick}
-          />
-        )}
+  useEffect(() => {
+    if (pendingScroll.current && !isLoading) {
+      pendingScroll.current = false;
+      sectionRef.current?.scrollIntoView({behavior: "smooth", block: "start"});
+    }
+  }, [isLoading]);
 
-        {showPagination && <Pagination page={page} totalPages={totalPages} setPage={setPage} />}
-      </section>
-    );
-  },
-);
+  return (
+    <section className="all-movies" ref={sectionRef}>
+      <h2 className="mt-10">All Movies</h2>
+
+      {errorMessage ? (
+        <p className="text-red-500">{errorMessage}</p>
+      ) : movieList.length === 0 && !isLoading ? (
+        <p className="text-gray-400 text-center py-20">No movies found. Try another search.</p>
+      ) : (
+        <MoviesGrid movieList={movieList} isLoading={isLoading} onMovieClick={onMovieClick} />
+      )}
+
+      {showPagination && (
+        <Pagination page={page} totalPages={totalPages} onPageChange={handlePageChange} />
+      )}
+    </section>
+  );
+};
 
 export default AllMoviesSection;

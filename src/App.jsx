@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {fetchMoviesFromTMDB} from "./services/tmdb";
@@ -25,8 +25,6 @@ const App = () => {
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  const isFirstLoad = useRef(true);
-
   const fetchMovies = async (query = "", pageNumber = 1) => {
     setIsLoading(true);
     setErrorMessage("");
@@ -40,8 +38,6 @@ const App = () => {
       if (query && data.results.length > 0) {
         await updateSearchCount(query, data.results[0]);
       }
-
-      isFirstLoad.current = false;
     } catch (error) {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage("Error fetching movies. Please try again later.");
@@ -90,22 +86,21 @@ const App = () => {
             <Route
               path="/"
               element={
-          <HomePage
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            trendingMovies={trendingMovies}
-            trendingError={trendingError}
-            isTrendingLoading={isTrendingLoading}
-            movieList={movieList}
-            isLoading={isLoading}
-            isFirstLoad={isFirstLoad.current}
-            errorMessage={errorMessage}
-            onMovieClick={setSelectedMovie}
-            page={page}
-            totalPages={totalPages}
-            setPage={setPage}
-            onPageChange={handleSearch}
-          />
+                <HomePage
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  trendingMovies={trendingMovies}
+                  trendingError={trendingError}
+                  isTrendingLoading={isTrendingLoading}
+                  movieList={movieList}
+                  isLoading={isLoading}
+                  errorMessage={errorMessage}
+                  onMovieClick={setSelectedMovie}
+                  page={page}
+                  totalPages={totalPages}
+                  setPage={setPage}
+                  onPageChange={handleSearch}
+                />
               }
             />
 

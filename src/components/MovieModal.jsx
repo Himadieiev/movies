@@ -46,6 +46,8 @@ const MovieModal = ({movie, onClose}) => {
       localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites, movie]));
       setIsFavorite(true);
     }
+
+    window.dispatchEvent(new Event("storage"));
   };
 
   const formatDate = (dateString) => {

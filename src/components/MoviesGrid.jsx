@@ -1,6 +1,6 @@
 import MovieCard from "./MovieCard";
 
-const MoviesGrid = ({movieList, isLoading, isFirstLoad, onMovieClick}) => {
+const MoviesGrid = ({movieList, isLoading, onMovieClick}) => {
   return (
     <ul>
       {isLoading
@@ -17,7 +17,7 @@ const MoviesGrid = ({movieList, isLoading, isFirstLoad, onMovieClick}) => {
             <MovieCard
               key={movie.id}
               movie={movie}
-              index={isFirstLoad ? index : 0}
+              index={index}
               onClick={() => onMovieClick(movie)}
             />
           ))}

@@ -1,4 +1,3 @@
-import {useRef, useEffect} from "react";
 import {useDebounce} from "react-use";
 
 import Header from "../components/Header";
@@ -14,29 +13,13 @@ const HomePage = ({
   isTrendingLoading,
   movieList,
   isLoading,
-  isFirstLoad,
   errorMessage,
   onMovieClick,
   page,
   totalPages,
   setPage,
 }) => {
-  const moviesRef = useRef(null);
-  const isFirstPageChange = useRef(true);
-
   useDebounce(() => onPageChange(searchTerm), 500, [searchTerm]);
-
-  useEffect(() => {
-    if (isFirstPageChange.current) {
-      isFirstPageChange.current = false;
-      return;
-    }
-
-    moviesRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }, [page]);
 
   return (
     <>
@@ -49,10 +32,8 @@ const HomePage = ({
       />
 
       <AllMoviesSection
-        ref={moviesRef}
         movieList={movieList}
         isLoading={isLoading}
-        isFirstLoad={isFirstLoad}
         errorMessage={errorMessage}
         onMovieClick={onMovieClick}
         page={page}
