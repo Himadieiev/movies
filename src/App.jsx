@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {fetchMoviesFromTMDB} from "./services/tmdb";
 import {getTrendingMovies, updateSearchCount} from "./services/appwrite";
 import HomePage from "./pages/HomePage";
+import FavoritesPage from "./pages/FavoritesPage";
 import MovieModal from "./components/MovieModal";
 import Navigation from "./components/Navigation";
 
