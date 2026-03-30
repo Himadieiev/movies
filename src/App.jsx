@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {fetchMoviesFromTMDB} from "./services/tmdb";
 import {getTrendingMovies, updateSearchCount} from "./services/appwrite";
@@ -85,6 +85,10 @@ const App = () => {
         <div className="wrapper">
           <Navigation />
 
+          <Routes>
+            <Route
+              path="/"
+              element={
           <HomePage
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -101,6 +105,11 @@ const App = () => {
             setPage={setPage}
             onPageChange={handleSearch}
           />
+              }
+            />
+
+            <Route path="/favorites" element={<FavoritesPage />} />
+          </Routes>
         </div>
 
         {selectedMovie && (
