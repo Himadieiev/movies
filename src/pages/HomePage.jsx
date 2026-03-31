@@ -23,7 +23,7 @@ const HomePage = ({
 
   return (
     <>
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} showSearch={true} />
 
       <TrendingSection
         trendingMovies={trendingMovies}
