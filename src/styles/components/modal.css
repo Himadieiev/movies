@@ -5,7 +5,7 @@
   }
 
   .modal-content {
-    @apply relative bg-gray-900 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6;
+    @apply relative bg-gray-900 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 scrollbar-custom;
     box-shadow: var(--shadow-modal);
   }
 
@@ -30,7 +30,7 @@
     @apply flex flex-col gap-2 flex-1;
 
     & h2 {
-      @apply text-white font-bold text-xl mb-1;
+      @apply pt-3 text-white font-bold text-base sm:text-xl mb-1;
     }
 
     & .rating {

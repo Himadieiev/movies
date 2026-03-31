@@ -61,7 +61,7 @@ const MovieModal = ({movie, onClose}) => {
           />
 
           <div className="modal-details">
-            <h2 className="pt-2">{title}</h2>
+            <h2>{title}</h2>
 
             <div className="rating">
               <img src="star.svg" alt="Star Icon" />
