@@ -1,6 +1,6 @@
 @layer components {
   .nav {
-    @apply flex gap-8;
+    @apply flex gap-x-5 gap-y-1 flex-wrap;
   }
 
   .nav-link {
