@@ -1,26 +1,17 @@
 import {useState, useEffect} from "react";
 
+import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieCard from "../components/MovieCard";
 import MovieModal from "../components/MovieModal";
 import Header from "../components/Header";
 
-const FAVORITES_KEY = "favorite_movies";
-
-const getFavorites = () => {
-  try {
-    return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
-  } catch {
-    return [];
-  }
-};
-
 const FavoritesPage = () => {
-  const [favorites, setFavorites] = useState(() => getFavorites());
+  const [favorites, setFavorites] = useState(() => getItems(STORAGE_KEYS.FAVORITES));
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     const handleStorageChange = () => {
-      setFavorites(getFavorites());
+      setFavorites(getItems(STORAGE_KEYS.FAVORITES));
     };
 
     window.addEventListener("storage", handleStorageChange);

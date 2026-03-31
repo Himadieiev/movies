@@ -58,21 +58,38 @@
     @apply text-gray-200 text-sm leading-relaxed mb-6;
   }
 
-  .modal-favorite {
-    @apply w-auto min-w-[200px] mx-auto py-2.5 px-6 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200;
+  .modal-actions {
+    @apply flex justify-start gap-2 flex-wrap;
+  }
+
+  .modal-button {
+    @apply w-auto min-w-[210px] py-2.5 px-4 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200;
     background: rgba(206, 206, 251, 0.1);
     color: var(--color-light-100);
 
     &:hover {
       background: rgba(206, 206, 251, 0.2);
     }
+  }
 
-    &.modal-favorite--active {
+  .modal-button--favorite {
+    &.modal-button--active {
       background: rgba(171, 139, 255, 0.15);
       color: var(--color-purple);
 
       &:hover {
         background: rgba(171, 139, 255, 0.25);
+      }
+    }
+  }
+
+  .modal-button--unwatched {
+    &.modal-button--active {
+      background: rgba(255, 139, 139, 0.15);
+      color: var(--color-red);
+
+      &:hover {
+        background: rgba(255, 139, 139, 0.25);
       }
     }
   }

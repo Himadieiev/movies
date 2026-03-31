@@ -1,19 +1,15 @@
 import {useEffect, useState} from "react";
 
-const FAVORITES_KEY = "favorite_movies";
-
-const getFavorites = () => {
-  try {
-    return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
-  } catch {
-    return [];
-  }
-};
+import {getItems, toggleItem, STORAGE_KEYS} from "../services/storage";
 
 const MovieModal = ({movie, onClose}) => {
   const [isFavorite, setIsFavorite] = useState(() => {
-    const favorites = getFavorites();
+    const favorites = getItems(STORAGE_KEYS.FAVORITES);
     return favorites.some((f) => f.id === movie.id);
+  });
+  const [isUnwatched, setIsUnwatched] = useState(() => {
+    const unwatched = getItems(STORAGE_KEYS.UNWATCHED);
+    return unwatched.some((m) => m.id === movie.id);
   });
 
   useEffect(() => {
@@ -35,19 +31,14 @@ const MovieModal = ({movie, onClose}) => {
 
   const {title, vote_average, poster_path, release_date, original_language, overview} = movie;
 
-  const toggleFavorite = () => {
-    const favorites = getFavorites();
+  const handleToggleFavorite = () => {
+    const newState = toggleItem(STORAGE_KEYS.FAVORITES, movie, isFavorite);
+    setIsFavorite(newState);
+  };
 
-    if (isFavorite) {
-      const updated = favorites.filter((f) => f.id !== movie.id);
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify(updated));
-      setIsFavorite(false);
-    } else {
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites, movie]));
-      setIsFavorite(true);
-    }
-
-    window.dispatchEvent(new Event("storage"));
+  const handleToggleUnwatched = () => {
+    const newState = toggleItem(STORAGE_KEYS.UNWATCHED, movie, isUnwatched);
+    setIsUnwatched(newState);
   };
 
   const formatDate = (dateString) => {
@@ -85,12 +76,21 @@ const MovieModal = ({movie, onClose}) => {
 
         {overview && <p className="modal-overview">{overview}</p>}
 
-        <button
-          className={`modal-favorite ${isFavorite ? "modal-favorite--active" : ""}`}
-          onClick={toggleFavorite}
-        >
-          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-        </button>
+        <div className="modal-actions">
+          <button
+            className={`modal-button modal-button--favorite ${isFavorite ? "modal-button--active" : ""}`}
+            onClick={handleToggleFavorite}
+          >
+            {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+          </button>
+
+          <button
+            className={`modal-button modal-button--unwatched ${isUnwatched ? "modal-button--active" : ""}`}
+            onClick={handleToggleUnwatched}
+          >
+            {isUnwatched ? "Remove from Unwatched" : "Add to Unwatched"}
+          </button>
+        </div>
       </div>
     </div>
   );
