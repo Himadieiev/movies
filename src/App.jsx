@@ -5,6 +5,7 @@ import {fetchMoviesFromTMDB} from "./services/tmdb";
 import {getTrendingMovies, updateSearchCount} from "./services/appwrite";
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
+import UnwatchedPage from "./pages/UnwatchedPage";
 import MovieModal from "./components/MovieModal";
 import Navigation from "./components/Navigation";
 
@@ -105,6 +106,7 @@ const App = () => {
             />
 
             <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/unwatched" element={<UnwatchedPage />} />
           </Routes>
         </div>
 
