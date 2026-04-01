@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useMemo} from "react";
 
 import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieModal from "../components/MovieModal";
@@ -7,6 +7,8 @@ import Header from "../components/Header";
 const UnwatchedPage = () => {
   const [unwatched, setUnwatched] = useState(() => getItems(STORAGE_KEYS.UNWATCHED));
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [sortKey, setSortKey] = useState(null);
+  const [sortDirection, setSortDirection] = useState("asc");
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -16,6 +18,46 @@ const UnwatchedPage = () => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
+
+  const requestSort = (key) => {
+    if (sortKey === key) {
+      setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDirection("asc");
+    }
+  };
+
+  const sortedMovies = useMemo(() => {
+    if (!sortKey) return unwatched;
+
+    return [...unwatched].sort((a, b) => {
+      let aVal, bVal;
+
+      switch (sortKey) {
+        case "title":
+          aVal = (a.title || "").toLowerCase();
+          bVal = (b.title || "").toLowerCase();
+          break;
+        case "release_date":
+          aVal = a.release_date ? new Date(a.release_date) : new Date(0);
+          bVal = b.release_date ? new Date(b.release_date) : new Date(0);
+          break;
+        default:
+          aVal = a[sortKey];
+          bVal = b[sortKey];
+      }
+
+      if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    });
+  }, [unwatched, sortKey, sortDirection]);
+
+  const getSortIcon = (key) => {
+    if (sortKey !== key) return "⇅";
+    return sortDirection === "asc" ? "↑" : "↓";
+  };
 
   const truncateOverview = (text, maxLength = 100) => {
     if (!text) return "";
@@ -45,13 +87,17 @@ const UnwatchedPage = () => {
                 <tr>
                   <th>#</th>
                   <th>Poster</th>
-                  <th>Title</th>
-                  <th>Release Date</th>
+                  <th onClick={() => requestSort("title")} className="sortable-header">
+                    Title <span className="sort-icon">{getSortIcon("title")}</span>
+                  </th>
+                  <th onClick={() => requestSort("release_date")} className="sortable-header">
+                    Release Date <span className="sort-icon">{getSortIcon("release_date")}</span>
+                  </th>
                   <th>Overview</th>
                 </tr>
               </thead>
               <tbody>
-                {unwatched.map((movie, index) => (
+                {sortedMovies.map((movie, index) => (
                   <tr
                     key={movie.id}
                     onClick={() => setSelectedMovie(movie)}

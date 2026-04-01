@@ -62,4 +62,16 @@
   .unwatched-overview {
     @apply max-w-md;
   }
+
+  .sortable-header {
+    @apply cursor-pointer select-none transition-colors;
+  }
+
+  .sortable-header:hover {
+    @apply text-white;
+  }
+
+  .sort-icon {
+    @apply inline-block ml-1 text-xs;
+  }
 }
