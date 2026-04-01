@@ -1,0 +1,65 @@
+@layer components {
+  .unwatched-section {
+    @apply mt-10;
+  }
+
+  .unwatched-empty {
+    @apply text-gray-400 text-center py-20;
+  }
+
+  .unwatched-table-wrapper {
+    @apply overflow-x-auto scrollbar-custom max-w-full;
+  }
+
+  .unwatched-table {
+    @apply w-full border-collapse min-w-[800px];
+  }
+
+  .unwatched-table thead tr {
+    @apply border-b border-gray-700;
+  }
+
+  .unwatched-table th {
+    @apply text-left py-3 px-4 text-gray-300 font-semibold text-sm whitespace-nowrap;
+  }
+
+  .unwatched-table td {
+    @apply py-3 px-4 text-gray-200 text-sm border-b border-gray-800;
+  }
+
+  .unwatched-row {
+    @apply cursor-pointer transition-colors;
+  }
+
+  .unwatched-row:hover {
+    @apply bg-[var(--color-dark-300)];
+  }
+
+  .unwatched-index {
+    @apply text-gray-400 font-medium;
+  }
+
+  .unwatched-poster-cell {
+    @apply w-16;
+  }
+
+  .unwatched-poster {
+    @apply w-12 h-16 object-cover rounded;
+  }
+
+  .unwatched-no-poster {
+    @apply w-12 h-16 bg-gray-700 rounded flex items-center text-center text-xs text-gray-400;
+  }
+
+  .unwatched-title-cell {
+    @apply font-medium;
+  }
+
+  .unwatched-year {
+    @apply whitespace-nowrap;
+  }
+
+  .unwatched-overview {
+    @apply max-w-md;
+  }
+}
