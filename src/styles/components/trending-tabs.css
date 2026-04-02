@@ -1,0 +1,17 @@
+@layer components {
+  .trending-tabs {
+    @apply flex gap-2 mt-6 mb-2 flex-wrap;
+  }
+
+  .trending-tab {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer bg-blue-950 text-gray-300 hover:text-white relative;
+  }
+
+  .trending-tab--active {
+    @apply bg-purple-800 text-white;
+  }
+
+  .trending-description {
+    @apply pl-4 text-gray-400 text-sm mt-2 mb-6;
+  }
+}
