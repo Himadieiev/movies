@@ -20,11 +20,11 @@
   }
 
   .unwatched-table th {
-    @apply text-left py-3 px-4 text-gray-300 font-semibold text-sm whitespace-nowrap;
+    @apply text-left py-2 sm:py-3 px-2 sm:px-4 text-gray-300 font-semibold text-sm whitespace-nowrap;
   }
 
   .unwatched-table td {
-    @apply py-3 px-4 text-gray-200 text-sm border-b border-gray-800;
+    @apply py-2 sm:py-3 px-2 sm:px-4 text-gray-200 text-sm border-b border-gray-800;
   }
 
   .unwatched-row {
@@ -32,7 +32,7 @@
   }
 
   .unwatched-row:hover {
-    @apply bg-[var(--color-dark-300)];
+    @apply bg-blue-950;
   }
 
   .unwatched-index {
@@ -44,7 +44,11 @@
   }
 
   .unwatched-poster {
-    @apply w-12 h-16 object-cover rounded;
+    @apply w-12 h-16 object-cover rounded transition-transform duration-200;
+  }
+
+  .unwatched-poster-cell:hover .unwatched-poster {
+    @apply scale-120;
   }
 
   .unwatched-no-poster {
