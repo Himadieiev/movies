@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {fetchMoviesFromTMDB} from "./services/tmdb";
-import {getTrendingMovies, updateSearchCount} from "./services/appwrite";
+import {updateSearchCount} from "./services/appwrite";
 import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import UnwatchedPage from "./pages/UnwatchedPage";
@@ -19,10 +19,6 @@ const App = () => {
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [trendingError, setTrendingError] = useState("");
-  const [isTrendingLoading, setIsTrendingLoading] = useState(true);
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
@@ -47,22 +43,6 @@ const App = () => {
     }
   };
 
-  const loadTrendingMovies = async () => {
-    setIsTrendingLoading(true);
-    setTrendingError("");
-
-    try {
-      const movies = await getTrendingMovies();
-
-      setTrendingMovies(movies);
-    } catch (error) {
-      console.error(`Error fetching trending movies: ${error}`);
-      setTrendingError("Error fetching trending movies.");
-    } finally {
-      setIsTrendingLoading(false);
-    }
-  };
-
   const handleSearch = (term) => {
     setDebouncedSearchTerm(term);
     setPage(1);
@@ -71,10 +51,6 @@ const App = () => {
   useEffect(() => {
     fetchMovies(debouncedSearchTerm, page);
   }, [debouncedSearchTerm, page]);
-
-  useEffect(() => {
-    loadTrendingMovies();
-  }, []);
 
   return (
     <BrowserRouter>
@@ -90,9 +66,6 @@ const App = () => {
                 <HomePage
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
-                  trendingMovies={trendingMovies}
-                  trendingError={trendingError}
-                  isTrendingLoading={isTrendingLoading}
                   movieList={movieList}
                   isLoading={isLoading}
                   errorMessage={errorMessage}

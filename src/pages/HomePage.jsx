@@ -8,9 +8,6 @@ const HomePage = ({
   searchTerm,
   setSearchTerm,
   onPageChange,
-  trendingMovies,
-  trendingError,
-  isTrendingLoading,
   movieList,
   isLoading,
   errorMessage,
@@ -25,11 +22,7 @@ const HomePage = ({
     <>
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} showSearch={true} />
 
-      <TrendingSection
-        trendingMovies={trendingMovies}
-        trendingError={trendingError}
-        isTrendingLoading={isTrendingLoading}
-      />
+      <TrendingSection />
 
       <AllMoviesSection
         movieList={movieList}
