@@ -2,7 +2,6 @@ import {useState, useEffect, useMemo} from "react";
 
 import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieModal from "../components/MovieModal";
-import Header from "../components/Header";
 
 const UnwatchedPage = () => {
   const [unwatched, setUnwatched] = useState(() => getItems(STORAGE_KEYS.UNWATCHED));
@@ -75,7 +74,9 @@ const UnwatchedPage = () => {
 
   return (
     <>
-      <Header showSearch={false} title={<span className="text-gradient">Unwatched Movies</span>} />
+      <h1>
+        <span className="text-gradient">Unwatched Movies</span>
+      </h1>
 
       <section className="unwatched-section">
         {unwatched.length === 0 ? (

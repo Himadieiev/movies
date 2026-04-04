@@ -7,7 +7,7 @@ import HomePage from "./pages/HomePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import UnwatchedPage from "./pages/UnwatchedPage";
 import MovieModal from "./components/MovieModal";
-import Navigation from "./components/Navigation";
+import Header from "./components/Header";
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -57,8 +57,7 @@ const App = () => {
       <main>
         <div className="pattern" />
         <div className="wrapper">
-          <Navigation />
-
+          <Header />
           <Routes>
             <Route
               path="/"

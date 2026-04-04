@@ -1,8 +1,8 @@
 import {useDebounce} from "react-use";
 
-import Header from "../components/Header";
 import TrendingSection from "../components/TrendingSection";
 import AllMoviesSection from "../components/AllMoviesSection";
+import Search from "../components/Search";
 
 const HomePage = ({
   searchTerm,
@@ -20,7 +20,10 @@ const HomePage = ({
 
   return (
     <>
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} showSearch={true} />
+      <h1>
+        Find <span className="text-gradient">Movies</span> You'll Enjoy Without the Hassle
+      </h1>
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <TrendingSection />
 

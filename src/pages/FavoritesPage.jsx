@@ -3,7 +3,6 @@ import {useState, useEffect} from "react";
 import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieCard from "../components/MovieCard";
 import MovieModal from "../components/MovieModal";
-import Header from "../components/Header";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState(() => getItems(STORAGE_KEYS.FAVORITES));
@@ -21,10 +20,9 @@ const FavoritesPage = () => {
 
   return (
     <>
-      <Header
-        showSearch={false}
-        title={<span className="text-gradient">Your Favorite Movies</span>}
-      />
+      <h1>
+        <span className="text-gradient">Your Favorite Movies</span>
+      </h1>
       <section className="all-movies pt-20">
         {favorites.length === 0 ? (
           <p className="text-gray-400 text-center py-20">
