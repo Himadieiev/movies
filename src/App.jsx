@@ -1,13 +1,15 @@
-import {useEffect, useState} from "react";
+import {lazy, Suspense, useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {fetchMoviesFromTMDB} from "./services/tmdb";
 import {updateSearchCount} from "./services/appwrite";
-import HomePage from "./pages/HomePage";
-import FavoritesPage from "./pages/FavoritesPage";
-import UnwatchedPage from "./pages/UnwatchedPage";
 import MovieModal from "./components/MovieModal";
 import Header from "./components/Header";
+import Spinner from "./components/Spinner";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
+const UnwatchedPage = lazy(() => import("./pages/UnwatchedPage"));
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -58,28 +60,36 @@ const App = () => {
         <div className="pattern" />
         <div className="wrapper">
           <Header />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <HomePage
-                  searchTerm={searchTerm}
-                  setSearchTerm={setSearchTerm}
-                  movieList={movieList}
-                  isLoading={isLoading}
-                  errorMessage={errorMessage}
-                  onMovieClick={setSelectedMovie}
-                  page={page}
-                  totalPages={totalPages}
-                  setPage={setPage}
-                  onPageChange={handleSearch}
-                />
-              }
-            />
+          <Suspense
+            fallback={
+              <div className="spinner-fullscreen">
+                <Spinner />
+              </div>
+            }
+          >
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomePage
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    movieList={movieList}
+                    isLoading={isLoading}
+                    errorMessage={errorMessage}
+                    onMovieClick={setSelectedMovie}
+                    page={page}
+                    totalPages={totalPages}
+                    setPage={setPage}
+                    onPageChange={handleSearch}
+                  />
+                }
+              />
 
-            <Route path="/favorites" element={<FavoritesPage />} />
-            <Route path="/unwatched" element={<UnwatchedPage />} />
-          </Routes>
+              <Route path="/favorites" element={<FavoritesPage />} />
+              <Route path="/unwatched" element={<UnwatchedPage />} />
+            </Routes>
+          </Suspense>
         </div>
 
         {selectedMovie && (
