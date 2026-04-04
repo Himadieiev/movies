@@ -1,0 +1,5 @@
+@layer components {
+  .spinner-fullscreen {
+    @apply fixed inset-0 flex items-center justify-center bg-primary z-50;
+  }
+}
