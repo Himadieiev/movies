@@ -58,13 +58,16 @@ const MovieModal = ({movie, onClose}) => {
             src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : "/no-movie.png"}
             alt={title}
             className="modal-poster"
+            decoding="async"
+            width="128"
+            height="192"
           />
 
           <div className="modal-details">
             <h2>{title}</h2>
 
             <div className="rating">
-              <img src="star.svg" alt="Star Icon" />
+              <img src="/star.svg" alt="Star Icon" />
               <p>{vote_average ? vote_average.toFixed(1) : "N/A"}</p>
             </div>
 

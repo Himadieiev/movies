@@ -173,6 +173,10 @@ const MovieCard = ({movie, index, onClick}) => {
       <img
         src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : "/no-movie.png"}
         alt={title}
+        width="243"
+        height="364"
+        loading="lazy"
+        decoding="async"
       />
 
       <div className="mt-4">
@@ -180,7 +184,7 @@ const MovieCard = ({movie, index, onClick}) => {
 
         <div className="content">
           <div className="rating">
-            <img src="star.svg" alt="Star Icon" />
+            <img src="/star.svg" alt="Star Icon" />
             <p>{vote_average ? vote_average.toFixed(1) : "N/A"}</p>
           </div>
 
