@@ -1,0 +1,101 @@
+@layer components {
+  .movie-details-page {
+    @apply max-w-7xl;
+  }
+
+  .back-button {
+    @apply flex items-center mb-6 px-4 py-2 bg-dark-100 text-white rounded-lg hover:bg-purple-900 transition-colors cursor-pointer;
+  }
+
+  .back-arrow {
+    @apply w-4 h-5 mr-1;
+  }
+
+  .movie-details-header {
+    @apply grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 mb-6;
+  }
+
+  .movie-details-poster {
+    @apply w-64 rounded-lg shadow-lg mx-auto md:mx-0 aspect-[2/3];
+  }
+
+  .movie-details-info h1 {
+    @apply text-3xl md:text-4xl font-bold text-white mb-2 text-center md:text-left leading-tight;
+  }
+
+  .tagline {
+    @apply text-gray-400 italic mb-4 text-center md:text-left;
+  }
+
+  .details-list {
+    @apply list-none p-0 m-0 mb-4 md:mx-0;
+  }
+
+  .details-list li {
+    @apply mb-2 text-gray-200;
+  }
+
+  .label {
+    @apply font-semibold text-gray-300 mr-2;
+  }
+
+  .overview {
+    @apply w-full mb-12;
+  }
+
+  .overview h3 {
+    @apply text-xl font-semibold text-white mb-2;
+  }
+
+  .overview p {
+    @apply text-gray-300 leading-relaxed;
+  }
+
+  .trailer-section {
+    @apply mb-12 flex flex-col items-center;
+  }
+
+  .trailer-section h2 {
+    @apply text-2xl font-bold text-white mb-4 text-center;
+  }
+
+  .trailer-container {
+    @apply relative w-full max-w-3xl overflow-hidden rounded-lg border border-gray-700 shadow-poster mx-auto aspect-video;
+  }
+
+  .trailer-container iframe {
+    @apply absolute top-0 left-0 w-full h-full;
+  }
+
+  .cast-section {
+    @apply mb-12;
+  }
+
+  .cast-section h2 {
+    @apply text-2xl font-bold text-white mb-2;
+  }
+
+  .cast-grid {
+    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 list-none p-0 m-0;
+  }
+
+  .cast-card {
+    @apply text-center bg-dark-100 rounded-lg p-3;
+  }
+
+  .cast-card img {
+    @apply w-full rounded-lg mb-2 aspect-[2/3] object-cover;
+  }
+
+  .no-avatar {
+    @apply w-full mb-2 aspect-[2/3] rounded-lg bg-gray-700 flex items-center justify-center text-xs text-gray-400;
+  }
+
+  .actor-name {
+    @apply text-white text-sm font-medium line-clamp-1;
+  }
+
+  .character-name {
+    @apply text-gray-400 text-xs line-clamp-1;
+  }
+}
