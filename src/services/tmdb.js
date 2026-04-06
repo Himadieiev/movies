@@ -51,3 +51,16 @@ export const fetchTopRatedMovies = async (page = 1) => {
 
   return response.json();
 };
+
+export const fetchMovieDetails = async (id) => {
+  const response = await fetch(
+    `${API_BASE_URL}/movie/${id}?append_to_response=videos,credits`,
+    API_OPTIONS,
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch movie details");
+  }
+
+  return response.json();
+};
