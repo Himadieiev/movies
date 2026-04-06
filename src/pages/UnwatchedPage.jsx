@@ -1,6 +1,7 @@
 import {useState, useEffect, useMemo} from "react";
 
 import {getItems, STORAGE_KEYS} from "../services/storage";
+import {formatDate} from "../utils/helpers";
 import MovieModal from "../components/MovieModal";
 
 const UnwatchedPage = () => {
@@ -61,15 +62,6 @@ const UnwatchedPage = () => {
   const truncateOverview = (text, maxLength = 100) => {
     if (!text) return "";
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return "N/A";
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
   };
 
   return (
