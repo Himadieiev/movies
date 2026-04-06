@@ -7,9 +7,19 @@ export const formatDate = (dateString) => {
   return `${day}-${month}-${year}`;
 };
 
+export const formatDateUA = (dateString) => {
+  if (!dateString) return "N/A";
+  return new Date(dateString).toLocaleDateString("uk-UA");
+};
+
 export const formatRuntime = (minutes) => {
   if (!minutes) return "N/A";
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
   return `${hours}h ${mins}m`;
+};
+
+export const truncateOverview = (text, maxLength = 100) => {
+  if (!text) return "";
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 };

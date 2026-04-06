@@ -1,7 +1,7 @@
 import {useState, useEffect, useMemo} from "react";
 
+import {formatDate, truncateOverview} from "../utils/helpers";
 import {getItems, STORAGE_KEYS} from "../services/storage";
-import {formatDate} from "../utils/helpers";
 import MovieModal from "../components/MovieModal";
 
 const UnwatchedPage = () => {
@@ -57,11 +57,6 @@ const UnwatchedPage = () => {
   const getSortIcon = (key) => {
     if (sortKey !== key) return "⇅";
     return sortDirection === "asc" ? "↑" : "↓";
-  };
-
-  const truncateOverview = (text, maxLength = 100) => {
-    if (!text) return "";
-    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
   };
 
   return (

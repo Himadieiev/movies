@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
+import {formatDateUA} from "../utils/helpers";
 import {getItems, toggleItem, STORAGE_KEYS} from "../services/storage";
 
 const MovieModal = ({movie, onClose}) => {
@@ -49,11 +50,6 @@ const MovieModal = ({movie, onClose}) => {
     setIsUnwatched(newState);
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "N/A";
-    return new Date(dateString).toLocaleDateString("uk-UA");
-  };
-
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -81,7 +77,7 @@ const MovieModal = ({movie, onClose}) => {
 
             <p className="lang">{original_language?.toUpperCase()}</p>
 
-            <p className="year">{formatDate(release_date)}</p>
+            <p className="year">{formatDateUA(release_date)}</p>
           </div>
         </div>
 

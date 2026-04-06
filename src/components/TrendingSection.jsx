@@ -1,9 +1,9 @@
 import {useState, useEffect} from "react";
 
-import Spinner from "./Spinner";
-import TrendingTabs from "./TrendingTabs";
 import {fetchPopularMovies, fetchTrendingMovies, fetchTopRatedMovies} from "../services/tmdb";
 import {getTrendingMovies as getLocalTrendingMovies} from "../services/appwrite";
+import Spinner from "./Spinner";
+import TrendingTabs from "./TrendingTabs";
 
 const TrendingSection = () => {
   const [activeTab, setActiveTab] = useState("searches");
