@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 import {getItems, toggleItem, STORAGE_KEYS} from "../services/storage";
 
@@ -11,6 +12,13 @@ const MovieModal = ({movie, onClose}) => {
     const unwatched = getItems(STORAGE_KEYS.UNWATCHED);
     return unwatched.some((m) => m.id === movie.id);
   });
+
+  const navigate = useNavigate();
+
+  const navigateToMovieDetails = () => {
+    onClose();
+    navigate(`/movie/${movie.id}`);
+  };
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -92,6 +100,10 @@ const MovieModal = ({movie, onClose}) => {
             onClick={handleToggleUnwatched}
           >
             {isUnwatched ? "Remove from Unwatched" : "Add to Unwatched"}
+          </button>
+
+          <button className="modal-button modal-button--details" onClick={navigateToMovieDetails}>
+            View Details
           </button>
         </div>
       </div>

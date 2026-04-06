@@ -1,20 +1,14 @@
 @layer components {
   .modal-overlay {
-    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
-    background: rgba(0, 0, 0, 0.7);
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70;
   }
 
   .modal-content {
-    @apply relative bg-gray-900 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 scrollbar-custom;
-    box-shadow: var(--shadow-modal);
+    @apply relative bg-gray-900 rounded-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-6 scrollbar-custom shadow-modal;
   }
 
   .modal-close {
-    @apply absolute top-2 right-3 z-10 text-white cursor-pointer border-none bg-transparent text-xl font-bold transition-all duration-200;
-
-    &:hover {
-      color: var(--color-purple);
-    }
+    @apply absolute top-2 right-3 z-10 text-white cursor-pointer border-none bg-transparent text-xl font-bold transition-all duration-200 hover:text-purple;
   }
 
   .modal-layout {
@@ -22,8 +16,7 @@
   }
 
   .modal-poster {
-    @apply w-32 rounded-lg object-cover flex-shrink-0 border border-gray-700 shadow-poster;
-    aspect-ratio: var(--aspect-poster);
+    @apply w-32 rounded-lg object-cover flex-shrink-0 border border-gray-700 shadow-poster aspect-[2/3];
   }
 
   .modal-details {
@@ -59,38 +52,22 @@
   }
 
   .modal-actions {
-    @apply flex justify-start gap-2 flex-wrap;
+    @apply flex flex-wrap justify-center gap-2 mt-4;
   }
 
   .modal-button {
-    @apply w-auto min-w-[210px] py-2.5 px-4 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200;
-    background: rgba(206, 206, 251, 0.1);
-    color: var(--color-light-100);
-
-    &:hover {
-      background: rgba(206, 206, 251, 0.2);
-    }
+    @apply w-auto min-w-[210px] py-2.5 px-4 rounded-xl text-sm font-semibold cursor-pointer border-none transition-all duration-200 flex-1 md:flex-none max-md:w-full bg-light-100/10 text-white hover:bg-light-100/20;
   }
 
-  .modal-button--favorite {
-    &.modal-button--active {
-      background: rgba(171, 139, 255, 0.15);
-      color: var(--color-purple);
-
-      &:hover {
-        background: rgba(171, 139, 255, 0.25);
-      }
-    }
+  .modal-button--favorite.modal-button--active {
+    @apply bg-purple/15 hover:bg-purple/25;
   }
 
-  .modal-button--unwatched {
-    &.modal-button--active {
-      background: rgba(255, 139, 139, 0.15);
-      color: var(--color-red);
+  .modal-button--unwatched.modal-button--active {
+    @apply bg-red/15 hover:bg-red/25;
+  }
 
-      &:hover {
-        background: rgba(255, 139, 139, 0.25);
-      }
-    }
+  .modal-button--details {
+    @apply bg-green/15 hover:bg-green/25;
   }
 }
