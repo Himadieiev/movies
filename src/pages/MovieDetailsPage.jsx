@@ -66,10 +66,7 @@ const MovieDetailsPage = () => {
     return (
       <div className="text-center py-20">
         <p className="text-red-500">{error || "Movie not found"}</p>
-        <button
-          onClick={() => navigate(-1)}
-          className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-        >
+        <button onClick={() => navigate(-1)} className="button-error-back ">
           Go Back
         </button>
       </div>
@@ -78,20 +75,12 @@ const MovieDetailsPage = () => {
 
   return (
     <div className="movie-details-page">
-      <button onClick={() => navigate(-1)} className="back-button">
-        <svg
-          className="back-arrow"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-        Back
-      </button>
+      <div className="movie-details-title">
+        <h1>
+          <span className="text-gradient">{movie.title}</span>
+        </h1>
+        {movie.tagline && <p className="tagline">{movie.tagline}</p>}
+      </div>
 
       <div className="movie-details-header">
         <img
@@ -108,9 +97,6 @@ const MovieDetailsPage = () => {
         />
 
         <div className="movie-details-info">
-          <h1>{movie.title}</h1>
-          {movie.tagline && <p className="tagline">{movie.tagline}</p>}
-
           <ul className="details-list">
             <li>
               <span className="label">Rating:</span>
@@ -141,7 +127,7 @@ const MovieDetailsPage = () => {
       </div>
 
       <div className="overview">
-        <h3>Overview</h3>
+        <h2>Overview</h2>
         <p>{movie.overview || "No overview available."}</p>
       </div>
 

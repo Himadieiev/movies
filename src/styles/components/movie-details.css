@@ -1,38 +1,34 @@
 @layer components {
   .movie-details-page {
-    @apply max-w-7xl;
+    @apply max-w-7xl pt-10;
   }
 
-  .back-button {
-    @apply flex items-center mb-6 px-4 py-2 bg-dark-100 text-white rounded-lg hover:bg-purple-900 transition-colors cursor-pointer;
-  }
-
-  .back-arrow {
-    @apply w-4 h-5 mr-1;
-  }
-
-  .movie-details-header {
-    @apply grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 mb-6;
-  }
-
-  .movie-details-poster {
-    @apply w-64 rounded-lg shadow-lg mx-auto md:mx-0 aspect-[2/3];
-  }
-
-  .movie-details-info h1 {
-    @apply text-3xl md:text-4xl font-bold text-white mb-2 text-center md:text-left leading-tight;
+  .movie-details-title h1 {
+    @apply text-4xl md:text-5xl font-bold text-white mb-2 text-center leading-tight;
   }
 
   .tagline {
-    @apply text-gray-400 italic mb-4 text-center md:text-left;
+    @apply text-gray-400 italic mb-4 text-center;
+  }
+
+  .button-error-back {
+    @apply mt-4 px-4 py-2 bg-purple-900 text-white rounded-lg hover:bg-purple-800 cursor-pointer transition-colors;
+  }
+
+  .movie-details-header {
+    @apply grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 mb-6 md:max-w-xl md:mx-auto;
+  }
+
+  .movie-details-poster {
+    @apply w-64 rounded-lg shadow-lg mx-auto md:mx-0 aspect-[2/3] border border-gray-700 shadow-poster;
   }
 
   .details-list {
-    @apply list-none p-0 m-0 mb-4 md:mx-0;
+    @apply flex flex-col gap-2 md:gap-4 list-none p-0 m-0 mb-4 md:mx-0;
   }
 
   .details-list li {
-    @apply mb-2 text-gray-200;
+    @apply text-gray-200;
   }
 
   .label {
@@ -40,11 +36,11 @@
   }
 
   .overview {
-    @apply w-full mb-12;
+    @apply w-full mb-12 lg:max-w-3xl lg:mx-auto;
   }
 
-  .overview h3 {
-    @apply text-xl font-semibold text-white mb-2;
+  .overview h2 {
+    @apply text-2xl font-semibold text-white mb-2 lg:text-center;
   }
 
   .overview p {
