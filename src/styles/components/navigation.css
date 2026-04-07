@@ -1,10 +1,30 @@
 @layer components {
   .nav {
-    @apply flex gap-x-5 gap-y-1 flex-wrap;
+    @apply flex items-center gap-x-5 gap-y-1 flex-wrap max-xs:justify-center;
+  }
+
+  .back-button {
+    @apply flex items-center gap-1 text-gray-400 text-lg font-semibold hover:text-white transition-colors cursor-pointer relative;
+  }
+
+  .back-arrow {
+    @apply w-4 h-5 max-xs:w-[30px] max-xs:h-[30px];
   }
 
   .nav-link {
-    @apply text-gray-400 hover:text-white text-lg font-semibold transition-colors relative;
+    @apply flex items-center gap-1 text-gray-400 hover:text-white text-lg font-semibold transition-colors relative;
+
+    & .favorite-icon {
+      @apply w-[15px] h-[13px] max-xs:w-[27px] max-xs:h-[24px];
+    }
+
+    & .home-icon {
+      @apply w-4 h-4 max-xs:w-[30px] max-xs:h-[27px];
+    }
+
+    & .unwatched-icon {
+      @apply w-4 h-5 max-xs:w-8 max-xs:h-8;
+    }
   }
 
   .nav-link.active {
@@ -12,11 +32,26 @@
   }
 
   .nav-link.active::after {
-    @apply absolute bottom-0 left-0 w-full h-[1px] bg-white;
+    @apply absolute bottom-0 left-0 w-full h-[1px] bg-white max-xs:hidden;
 
     content: "";
     transform: scaleX(0);
     transform-origin: center;
     animation: underlineGrow 0.3s ease forwards;
+  }
+
+  .nav-link span,
+  .back-button span {
+    @apply max-xs:sr-only;
+  }
+
+  .nav-link::before,
+  .back-button::before {
+    @apply max-xs:content-[attr(data-tooltip)] max-xs:absolute max-xs:-bottom-8 max-xs:left-1/2 max-xs:-translate-x-1/2 max-xs:px-2 max-xs:py-1 max-xs:bg-dark-100 max-xs:text-white max-xs:text-xs max-xs:rounded max-xs:whitespace-nowrap max-xs:opacity-0 max-xs:pointer-events-none max-xs:transition-opacity max-xs:duration-200 max-xs:z-50;
+  }
+
+  .nav-link:hover::before,
+  .back-button:hover::before {
+    @apply max-xs:opacity-100;
   }
 }
