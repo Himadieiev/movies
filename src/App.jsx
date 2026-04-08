@@ -6,6 +6,7 @@ import {updateSearchCount} from "./services/appwrite";
 import MovieModal from "./components/MovieModal";
 import Header from "./components/Header";
 import Spinner from "./components/Spinner";
+import ScrollToTop from "./components/ScrollToTop";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
@@ -57,6 +58,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <main>
         <div className="pattern" />
         <div className="wrapper">
