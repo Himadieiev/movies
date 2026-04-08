@@ -23,10 +23,8 @@
   --background-image-hero-pattern: url("/hero-bg.png");
 
   --shadow-card: 0 0 15px var(--color-purple);
-  --shadow-card-hover: 0 0 15px var(--color-purple);
   --shadow-modal: 0 0 5px rgba(255, 255, 255, 0.5);
   --shadow-poster: 0 0 6px rgba(255, 255, 255, 0.3);
-  --shadow-pagination: 0 0 6px rgba(255, 255, 255, 0.3);
   --shadow-focus: 0 0 5px var(--color-gray-200);
 
   --aspect-poster: 2 / 3;

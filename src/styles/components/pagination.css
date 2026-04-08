@@ -11,7 +11,7 @@
     }
 
     & button:not(:disabled):hover {
-      box-shadow: var(--shadow-pagination);
+      @apply shadow-poster;
     }
 
     & button:disabled {
