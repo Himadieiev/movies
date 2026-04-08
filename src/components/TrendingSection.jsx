@@ -66,11 +66,12 @@ const TrendingSection = () => {
             {movies.slice(0, 5).map((movie, index) => {
               const isSearches = activeTab === "searches";
               const movieId = isSearches ? movie.$id || index : movie.id || index;
-              const posterUrl = isSearches
-                ? movie.poster_url
-                : movie.poster_path && !movie.poster_path.includes("null")
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : null;
+              let posterUrl = null;
+              const imagePath = isSearches ? movie.poster_url : movie.poster_path;
+
+              if (imagePath && typeof imagePath === "string" && !imagePath.includes("null")) {
+                posterUrl = isSearches ? imagePath : `https://image.tmdb.org/t/p/w500${imagePath}`;
+              }
               const title = isSearches ? movie.movie_title : movie.title;
 
               return (
