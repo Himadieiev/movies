@@ -72,9 +72,7 @@ const MovieDetailsPage = () => {
   return (
     <div className="movie-details-page">
       <div className="movie-details-title">
-        <h1>
-          <span className="text-gradient">{movie.title}</span>
-        </h1>
+        <h1 className="text-gradient">{movie.title}</h1>
         {movie.tagline && <p className="tagline">{movie.tagline}</p>}
       </div>
 

@@ -61,9 +61,7 @@ const UnwatchedPage = () => {
 
   return (
     <>
-      <h1>
-        <span className="text-gradient">Unwatched Movies</span>
-      </h1>
+      <h1 className="text-gradient">Unwatched Movies</h1>
 
       <section className="unwatched-section">
         {unwatched.length === 0 ? (

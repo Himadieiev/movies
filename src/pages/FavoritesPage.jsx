@@ -20,10 +20,9 @@ const FavoritesPage = () => {
 
   return (
     <>
-      <h1>
-        <span className="text-gradient">Your Favorite Movies</span>
-      </h1>
-      <section className="all-movies pt-20">
+      <h1 className="text-gradient">Your Favorite Movies</h1>
+
+      <section className="all-movies pt-8 sm:pt-15">
         {favorites.length === 0 ? (
           <p className="text-gray-400 text-center py-20">
             No favorite movies yet. Add some from the home page!

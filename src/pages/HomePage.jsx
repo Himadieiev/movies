@@ -20,9 +20,8 @@ const HomePage = ({
 
   return (
     <>
-      <h1>
-        Find <span className="text-gradient">Movies</span> You'll Enjoy Without the Hassle
-      </h1>
+      <h1 className="text-gradient">Discover Your Next Favorite Movie</h1>
+
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
       <TrendingSection />
