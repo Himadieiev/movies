@@ -1,6 +1,6 @@
 import {useState, useEffect, useMemo} from "react";
 
-import {formatDate, truncateOverview} from "../utils/helpers";
+import {formatDate, truncateOverview, handleKeyDown} from "../utils/helpers";
 import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieModal from "../components/MovieModal";
 
@@ -75,10 +75,16 @@ const UnwatchedPage = () => {
                 <tr>
                   <th>#</th>
                   <th>Poster</th>
-                  <th onClick={() => requestSort("title")} className="sortable-header">
+                  <th
+                    onClick={() => requestSort("title")}
+                    onKeyDown={handleKeyDown(() => requestSort("title"))}
+                    className="sortable-header"
                     Title <span className="sort-icon">{getSortIcon("title")}</span>
                   </th>
-                  <th onClick={() => requestSort("release_date")} className="sortable-header">
+                  <th
+                    onClick={() => requestSort("release_date")}
+                    onKeyDown={handleKeyDown(() => requestSort("release_date"))}
+                    className="sortable-header"
                     Release Date <span className="sort-icon">{getSortIcon("release_date")}</span>
                   </th>
                   <th>Overview</th>
@@ -89,6 +95,7 @@ const UnwatchedPage = () => {
                   <tr
                     key={movie.id}
                     onClick={() => setSelectedMovie(movie)}
+                    onKeyDown={handleKeyDown(() => setSelectedMovie(movie))}
                     className="unwatched-row"
                   >
                     <td className="unwatched-index">{index + 1}</td>

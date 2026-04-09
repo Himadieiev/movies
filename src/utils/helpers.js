@@ -23,3 +23,10 @@ export const truncateOverview = (text, maxLength = 100) => {
   if (!text) return "";
   return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 };
+
+export const handleKeyDown = (callback) => (e) => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    callback();
+  }
+};
