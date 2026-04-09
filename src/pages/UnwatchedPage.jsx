@@ -77,12 +77,16 @@ const UnwatchedPage = () => {
                     onClick={() => requestSort("title")}
                     onKeyDown={handleKeyDown(() => requestSort("title"))}
                     className="sortable-header"
+                    tabIndex={0}
+                  >
                     Title <span className="sort-icon">{getSortIcon("title")}</span>
                   </th>
                   <th
                     onClick={() => requestSort("release_date")}
                     onKeyDown={handleKeyDown(() => requestSort("release_date"))}
                     className="sortable-header"
+                    tabIndex={0}
+                  >
                     Release Date <span className="sort-icon">{getSortIcon("release_date")}</span>
                   </th>
                   <th>Overview</th>
@@ -95,6 +99,7 @@ const UnwatchedPage = () => {
                     onClick={() => setSelectedMovie(movie)}
                     onKeyDown={handleKeyDown(() => setSelectedMovie(movie))}
                     className="unwatched-row"
+                    tabIndex={0}
                   >
                     <td className="unwatched-index">{index + 1}</td>
                     <td className="unwatched-poster-cell">

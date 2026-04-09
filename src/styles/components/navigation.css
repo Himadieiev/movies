@@ -51,7 +51,9 @@
   }
 
   .nav-link:hover::before,
-  .back-button:hover::before {
+  .nav-link:focus-visible::before,
+  .back-button:hover::before,
+  .back-button:focus-visible::before {
     @apply max-xs:opacity-100;
   }
 }

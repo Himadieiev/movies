@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {formatDateUA} from "../utils/helpers";
@@ -21,8 +21,11 @@ const MovieModal = ({movie, onClose}) => {
     navigate(`/movie/${movie.id}`);
   };
 
+  const closeButtonRef = useRef(null);
+
   useEffect(() => {
     document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
 
     const handleEsc = (e) => {
       if (e.key === "Escape") {
@@ -53,7 +56,7 @@ const MovieModal = ({movie, onClose}) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
+        <button className="modal-close" onClick={onClose} ref={closeButtonRef}>
           ✕
         </button>
 

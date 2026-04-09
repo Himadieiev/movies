@@ -48,6 +48,10 @@ const MovieCard = ({movie, index, onClick}) => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
+      if (e.target.closest("button")) {
+        return;
+      }
+
       e.preventDefault();
       onClick();
     }

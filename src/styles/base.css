@@ -20,4 +20,8 @@
   header img {
     @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
   }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-purple-400 ring-inset;
+  }
 }
