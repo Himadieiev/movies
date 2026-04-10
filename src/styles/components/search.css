@@ -20,6 +20,6 @@
   }
 
   .search input:focus-visible {
-    @apply outline-none ring-0;
+    @apply outline-none ring-1 ring-purple-500/50 rounded-lg;
   }
 }

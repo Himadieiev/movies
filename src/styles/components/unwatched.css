@@ -15,6 +15,10 @@
     @apply w-full border-collapse min-w-[800px];
   }
 
+  .unwatched-table *:focus-visible {
+    @apply ring-inset;
+  }
+
   .unwatched-table thead tr {
     @apply border-b border-gray-700;
   }
