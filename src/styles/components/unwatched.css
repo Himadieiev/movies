@@ -1,6 +1,6 @@
 @layer components {
   .unwatched-section {
-    @apply mt-10;
+    @apply mt-2;
   }
 
   .unwatched-empty {
@@ -81,5 +81,27 @@
 
   .sort-icon {
     @apply inline-block ml-1 text-xs;
+  }
+
+  .unwatched-actions-bar {
+    @apply h-12 sm:h-16 flex items-center;
+  }
+
+  .unwatched-checkbox-cell {
+    @apply w-8 text-center;
+  }
+
+  .unwatched-checkbox {
+    @apply w-4 h-4 cursor-pointer relative -top-[1.5px];
+    vertical-align: middle;
+    accent-color: var(--color-purple);
+  }
+
+  .unwatched-checkbox:checked:focus-visible {
+    @apply outline-none ring-2 ring-white ring-inset;
+  }
+
+  .unwatched-delete-btn {
+    @apply px-3 py-2 bg-light-100/10 text-white text-xs sm:text-sm rounded-lg hover:bg-purple-950 transition-colors cursor-pointer;
   }
 }
