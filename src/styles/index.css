@@ -16,5 +16,6 @@
 @import "./components/all-movies.css";
 @import "./components/pagination.css";
 @import "./components/modal.css";
+@import "./components/confirm-modal.css";
 @import "./components/unwatched.css";
 @import "./components/movie-details.css";
