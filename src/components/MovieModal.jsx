@@ -1,8 +1,9 @@
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {formatDateUA} from "../utils/helpers";
 import {getItems, toggleItem, STORAGE_KEYS} from "../services/storage";
+import {useModal} from "../hooks/useModal";
 
 const MovieModal = ({movie, onClose}) => {
   const [isFavorite, setIsFavorite] = useState(() => {
@@ -15,31 +16,12 @@ const MovieModal = ({movie, onClose}) => {
   });
 
   const navigate = useNavigate();
+  const closeButtonRef = useModal(true, onClose);
 
   const navigateToMovieDetails = () => {
     onClose();
     navigate(`/movie/${movie.id}`);
   };
-
-  const closeButtonRef = useRef(null);
-
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-
-    const handleEsc = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEsc);
-
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", handleEsc);
-    };
-  }, [onClose]);
 
   const {title, vote_average, poster_path, release_date, original_language, overview} = movie;
 
