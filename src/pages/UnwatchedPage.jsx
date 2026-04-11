@@ -3,6 +3,7 @@ import {useState, useEffect, useMemo} from "react";
 import {formatDate, truncateOverview, handleKeyDown} from "../utils/helpers";
 import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieModal from "../components/MovieModal";
+import ConfirmModal from "../components/ConfirmModal";
 
 const UnwatchedPage = () => {
   const [unwatched, setUnwatched] = useState(() => getItems(STORAGE_KEYS.UNWATCHED));
@@ -10,6 +11,7 @@ const UnwatchedPage = () => {
   const [sortKey, setSortKey] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [selectedMovies, setSelectedMovies] = useState([]);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -95,7 +97,13 @@ const UnwatchedPage = () => {
             <div className="unwatched-actions-bar">
               {selectedMovies.length > 0 && (
                 <button
-                  onClick={handleDeleteSelected}
+                  onClick={() => {
+                    if (selectedMovies.length === 1) {
+                      handleDeleteSelected();
+                    } else {
+                      setShowConfirm(true);
+                    }
+                  }}
                   className="unwatched-delete-btn"
                   aria-label={`Delete ${selectedMovies.length} selected movies`}
                 >
@@ -187,6 +195,17 @@ const UnwatchedPage = () => {
       </section>
 
       {selectedMovie && <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />}
+
+      {showConfirm && (
+        <ConfirmModal
+          message={`Delete ${selectedMovies.length} movies from unwatched?`}
+          onConfirm={() => {
+            handleDeleteSelected();
+            setShowConfirm(false);
+          }}
+          onCancel={() => setShowConfirm(false)}
+        />
+      )}
     </>
   );
 };
