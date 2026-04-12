@@ -1,0 +1,17 @@
+@layer components {
+  .table-search {
+    @apply relative mb-4 max-w-md;
+  }
+
+  .table-search-input {
+    @apply w-full px-4 py-2 pr-8 bg-dark-100 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500;
+  }
+
+  .table-search-clear {
+    @apply absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors cursor-pointer;
+  }
+
+  .table-search input:focus-visible {
+    @apply outline-none ring-1 ring-purple-500/50 rounded-lg;
+  }
+}

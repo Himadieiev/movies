@@ -4,6 +4,7 @@ import {formatDate, truncateOverview, handleKeyDown} from "../utils/helpers";
 import {getItems, STORAGE_KEYS} from "../services/storage";
 import MovieModal from "../components/MovieModal";
 import ConfirmModal from "../components/ConfirmModal";
+import TableSearch from "../components/TableSearch";
 
 const UnwatchedPage = () => {
   const [unwatched, setUnwatched] = useState(() => getItems(STORAGE_KEYS.UNWATCHED));
@@ -12,6 +13,7 @@ const UnwatchedPage = () => {
   const [sortDirection, setSortDirection] = useState("asc");
   const [selectedMovies, setSelectedMovies] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -21,6 +23,18 @@ const UnwatchedPage = () => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setSelectedMovies([]);
+  }, [searchTerm]);
+
+  const filteredMovies = useMemo(() => {
+    if (!searchTerm.trim()) return unwatched;
+    return unwatched.filter((movie) =>
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [unwatched, searchTerm]);
 
   const requestSort = (key) => {
     if (sortKey === key) {
@@ -32,9 +46,9 @@ const UnwatchedPage = () => {
   };
 
   const sortedMovies = useMemo(() => {
-    if (!sortKey) return unwatched;
+    if (!sortKey) return filteredMovies;
 
-    return [...unwatched].sort((a, b) => {
+    return [...filteredMovies].sort((a, b) => {
       let aVal, bVal;
 
       switch (sortKey) {
@@ -55,7 +69,7 @@ const UnwatchedPage = () => {
       if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
       return 0;
     });
-  }, [unwatched, sortKey, sortDirection]);
+  }, [filteredMovies, sortKey, sortDirection]);
 
   const getSortIcon = (key) => {
     if (sortKey !== key) return "⇅";
@@ -91,9 +105,17 @@ const UnwatchedPage = () => {
 
       <section className="unwatched-section">
         {unwatched.length === 0 ? (
-          <p className="unwatched-empty">No unwatched movies yet. Add some from the home page!</p>
+          <p className="unwatched-empty pt-20">
+            No unwatched movies yet. Add some from the home page!
+          </p>
         ) : (
           <>
+            <TableSearch
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              placeholder="Search by title..."
+            />
+
             <div className="unwatched-actions-bar">
               {selectedMovies.length > 0 && (
                 <button
@@ -112,84 +134,92 @@ const UnwatchedPage = () => {
               )}
             </div>
 
-            <div className="unwatched-table-wrapper">
-              <table className="unwatched-table">
-                <thead>
-                  <tr>
-                    <th className="unwatched-checkbox-cell">
-                      <input
-                        type="checkbox"
-                        checked={
-                          selectedMovies.length === sortedMovies.length && sortedMovies.length > 0
-                        }
-                        onChange={handleSelectAll}
-                        className="unwatched-checkbox"
-                        aria-label={
-                          selectedMovies.length === sortedMovies.length
-                            ? "Deselect all"
-                            : "Select all"
-                        }
-                      />
-                    </th>
-                    <th>#</th>
-                    <th>Poster</th>
-                    <th
-                      onClick={() => requestSort("title")}
-                      onKeyDown={handleKeyDown(() => requestSort("title"))}
-                      className="sortable-header"
-                      tabIndex={0}
-                    >
-                      Title <span className="sort-icon">{getSortIcon("title")}</span>
-                    </th>
-                    <th
-                      onClick={() => requestSort("release_date")}
-                      onKeyDown={handleKeyDown(() => requestSort("release_date"))}
-                      className="sortable-header"
-                      tabIndex={0}
-                    >
-                      Release Date <span className="sort-icon">{getSortIcon("release_date")}</span>
-                    </th>
-                    <th>Overview</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sortedMovies.map((movie, index) => (
-                    <tr
-                      key={movie.id}
-                      onClick={() => setSelectedMovie(movie)}
-                      onKeyDown={handleKeyDown(() => setSelectedMovie(movie))}
-                      className="unwatched-row"
-                      tabIndex={0}
-                    >
-                      <td className="unwatched-checkbox-cell" onClick={(e) => e.stopPropagation()}>
+            {sortedMovies.length === 0 ? (
+              <p className="unwatched-empty pt-8">No movies found matching "{searchTerm}"</p>
+            ) : (
+              <div className="unwatched-table-wrapper">
+                <table className="unwatched-table">
+                  <thead>
+                    <tr>
+                      <th className="unwatched-checkbox-cell">
                         <input
                           type="checkbox"
-                          checked={selectedMovies.includes(movie.id)}
-                          onChange={() => handleSelectMovie(movie.id)}
-                          onClick={(e) => e.stopPropagation()}
+                          checked={
+                            selectedMovies.length === sortedMovies.length && sortedMovies.length > 0
+                          }
+                          onChange={handleSelectAll}
                           className="unwatched-checkbox"
+                          aria-label={
+                            selectedMovies.length === sortedMovies.length
+                              ? "Deselect all"
+                              : "Select all"
+                          }
                         />
-                      </td>
-                      <td className="unwatched-index">{index + 1}</td>
-                      <td className="unwatched-poster-cell">
-                        {movie.poster_path ? (
-                          <img
-                            src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
-                            alt={movie.title}
-                            className="unwatched-poster"
-                          />
-                        ) : (
-                          <div className="unwatched-no-poster">No poster</div>
-                        )}
-                      </td>
-                      <td className="unwatched-title-cell">{movie.title}</td>
-                      <td className="unwatched-year">{formatDate(movie.release_date)}</td>
-                      <td className="unwatched-overview">{truncateOverview(movie.overview)}</td>
+                      </th>
+                      <th>#</th>
+                      <th>Poster</th>
+                      <th
+                        onClick={() => requestSort("title")}
+                        onKeyDown={handleKeyDown(() => requestSort("title"))}
+                        className="sortable-header"
+                        tabIndex={0}
+                      >
+                        Title <span className="sort-icon">{getSortIcon("title")}</span>
+                      </th>
+                      <th
+                        onClick={() => requestSort("release_date")}
+                        onKeyDown={handleKeyDown(() => requestSort("release_date"))}
+                        className="sortable-header"
+                        tabIndex={0}
+                      >
+                        Release Date{" "}
+                        <span className="sort-icon">{getSortIcon("release_date")}</span>
+                      </th>
+                      <th>Overview</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {sortedMovies.map((movie, index) => (
+                      <tr
+                        key={movie.id}
+                        onClick={() => setSelectedMovie(movie)}
+                        onKeyDown={handleKeyDown(() => setSelectedMovie(movie))}
+                        className="unwatched-row"
+                        tabIndex={0}
+                      >
+                        <td
+                          className="unwatched-checkbox-cell"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={selectedMovies.includes(movie.id)}
+                            onChange={() => handleSelectMovie(movie.id)}
+                            onClick={(e) => e.stopPropagation()}
+                            className="unwatched-checkbox"
+                          />
+                        </td>
+                        <td className="unwatched-index">{index + 1}</td>
+                        <td className="unwatched-poster-cell">
+                          {movie.poster_path ? (
+                            <img
+                              src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
+                              alt={movie.title}
+                              className="unwatched-poster"
+                            />
+                          ) : (
+                            <div className="unwatched-no-poster">No poster</div>
+                          )}
+                        </td>
+                        <td className="unwatched-title-cell">{movie.title}</td>
+                        <td className="unwatched-year">{formatDate(movie.release_date)}</td>
+                        <td className="unwatched-overview">{truncateOverview(movie.overview)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </>
         )}
       </section>

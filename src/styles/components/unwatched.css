@@ -4,7 +4,7 @@
   }
 
   .unwatched-empty {
-    @apply text-gray-400 text-center py-20;
+    @apply text-gray-400 text-center pb-20;
   }
 
   .unwatched-table-wrapper {

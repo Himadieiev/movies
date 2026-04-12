@@ -12,6 +12,7 @@
 @import "./components/trending.css";
 @import "./components/trending-tabs.css";
 @import "./components/search.css";
+@import "./components/table-search.css";
 @import "./components/movie-card.css";
 @import "./components/all-movies.css";
 @import "./components/pagination.css";
