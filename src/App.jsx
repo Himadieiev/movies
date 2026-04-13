@@ -7,6 +7,7 @@ import MovieModal from "./components/MovieModal";
 import Header from "./components/Header";
 import Spinner from "./components/Spinner";
 import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
@@ -100,6 +101,7 @@ const App = () => {
           <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
         )}
       </main>
+      <ScrollToTopButton />
     </BrowserRouter>
   );
 };

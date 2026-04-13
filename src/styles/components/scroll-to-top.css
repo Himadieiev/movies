@@ -1,0 +1,5 @@
+@layer components {
+  .scroll-to-top {
+    @apply fixed bottom-6 right-6 w-12 h-12 rounded-full bg-purple-900 text-white text-2xl flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 z-50;
+  }
+}
