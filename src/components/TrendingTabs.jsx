@@ -1,8 +1,8 @@
 const TRENDING_TABS = [
-  {id: "searches", label: "Top Searches", description: "Most searched movies on this site"},
   {id: "popular", label: "Popular", description: "Currently popular movies on TMDB"},
   {id: "trending", label: "Trending", description: "Trending movies this week on TMDB"},
   {id: "top_rated", label: "Top Rated", description: "Highest rated movies of all time"},
+  {id: "searches", label: "Top Searches", description: "Most searched movies on this site"},
 ];
 
 const TrendingTabs = ({activeTab, onTabChange}) => {

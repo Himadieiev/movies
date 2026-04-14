@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 import TrendingTabs from "./TrendingTabs";
 
 const TrendingSection = () => {
-  const [activeTab, setActiveTab] = useState("searches");
+  const [activeTab, setActiveTab] = useState("popular");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
