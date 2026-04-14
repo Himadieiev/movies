@@ -1,0 +1,33 @@
+@layer components {
+  .search-history {
+    @apply absolute top-full left-0 right-0 mt-1 p-3 bg-dark-100 rounded-lg border border-gray-700 z-20 w-full max-w-3xl mx-auto;
+  }
+
+  .search-history-header {
+    @apply flex justify-between items-center mb-2;
+  }
+
+  .search-history-title {
+    @apply text-xs text-gray-400 font-medium;
+  }
+
+  .search-history-clear {
+    @apply text-xs text-gray-500 hover:text-white transition-colors cursor-pointer;
+  }
+
+  .search-history-list {
+    @apply flex flex-col gap-1;
+  }
+
+  .search-history-item {
+    @apply flex items-center justify-between gap-4 px-2 py-1.5 rounded text-sm text-gray-300 hover:bg-gray-800 transition-colors;
+  }
+
+  .search-history-term {
+    @apply cursor-pointer text-left flex-1 truncate max-w-[300px];
+  }
+
+  .search-history-remove {
+    @apply text-gray-500 hover:text-white text-xs cursor-pointer transition-colors;
+  }
+}
