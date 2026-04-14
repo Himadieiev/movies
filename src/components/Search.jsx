@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
+import {forwardRef, useEffect, useState} from "react";
 
-const Search = ({searchTerm, setSearchTerm}) => {
+const Search = forwardRef(({searchTerm, setSearchTerm, onFocus}, ref) => {
   const [isMobile, setIsMobile] = useState(() => window.matchMedia("(max-width: 425px)").matches);
 
   const handleClear = () => {
@@ -23,10 +23,12 @@ const Search = ({searchTerm, setSearchTerm}) => {
         <img src="/search.svg" alt="search" />
 
         <input
+          ref={ref}
           type="text"
           placeholder={isMobile ? "Search movies" : "Search through thousand of movies"}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onFocus={onFocus}
         />
 
         {searchTerm && (
@@ -37,6 +39,6 @@ const Search = ({searchTerm, setSearchTerm}) => {
       </div>
     </div>
   );
-};
+});
 
 export default Search;
