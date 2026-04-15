@@ -7,7 +7,7 @@
     }
 
     & .no-poster {
-      @apply w-[127px] h-[170px] p-1 flex flex-col gap-1 justify-center items-center text-white text-[12px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-poster bg-gray-700;
+      @apply w-[127px] h-[170px] p-1 flex flex-col gap-1 justify-center items-center text-white text-[12px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-poster bg-gray-700 hover:border-gray-400 transition-all cursor-pointer;
 
       & .no-poster-title {
         @apply text-sm text-center line-clamp-4 text-purple;
@@ -27,7 +27,7 @@
     }
 
     & ul li img {
-      @apply w-[127px] h-[170px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-poster;
+      @apply w-[127px] h-[170px] rounded-lg object-cover -ml-3.5 border border-gray-700 shadow-poster hover:border-gray-400 transition-all cursor-pointer;
     }
   }
 }

@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 import {fetchPopularMovies, fetchTrendingMovies, fetchTopRatedMovies} from "../services/tmdb";
 import {getTrendingMovies as getLocalTrendingMovies} from "../services/appwrite";
@@ -6,6 +7,8 @@ import Spinner from "./Spinner";
 import TrendingTabs from "./TrendingTabs";
 
 const TrendingSection = () => {
+  const navigate = useNavigate();
+
   const [activeTab, setActiveTab] = useState("popular");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +52,10 @@ const TrendingSection = () => {
     fetchData();
   }, [activeTab]);
 
+  const handleMovieClick = (movieId) => {
+    navigate(`/movie/${movieId}`);
+  };
+
   return (
     <section className="trending">
       <h2>Trending Movies</h2>
@@ -65,7 +72,8 @@ const TrendingSection = () => {
           <ul className={movies.length < 5 ? "justify-start" : "justify-between"}>
             {movies.slice(0, 5).map((movie, index) => {
               const isSearches = activeTab === "searches";
-              const movieId = isSearches ? movie.$id || index : movie.id || index;
+              const movieId = isSearches ? movie.movie_id : movie.id;
+              const movieKey = isSearches ? movie.$id || index : movie.id || index;
               let posterUrl = null;
               const imagePath = isSearches ? movie.poster_url : movie.poster_path;
 
@@ -75,12 +83,12 @@ const TrendingSection = () => {
               const title = isSearches ? movie.movie_title : movie.title;
 
               return (
-                <li key={movieId}>
+                <li key={movieKey}>
                   <p>{index + 1}</p>
                   {posterUrl ? (
-                    <img src={posterUrl} alt={title} />
+                    <img src={posterUrl} alt={title} onClick={() => handleMovieClick(movieId)} />
                   ) : (
-                    <div className="no-poster">
+                    <div className="no-poster" onClick={() => handleMovieClick(movieId)}>
                       <span>No Poster</span>
                       <span className="no-poster-title">{title}</span>
                     </div>
