@@ -1,17 +1,23 @@
-const TRENDING_TABS = [
-  {id: "popular", label: "Popular", description: "Currently popular movies on TMDB"},
-  {id: "trending", label: "Trending", description: "Trending movies this week on TMDB"},
-  {id: "top_rated", label: "Top Rated", description: "Highest rated movies of all time"},
-  {id: "searches", label: "Top Searches", description: "Most searched movies on this site"},
-];
+import {TRENDING_TABS} from "../constants/trendingTabs";
 
-const TrendingTabs = ({activeTab, onTabChange}) => {
-  const activeDescription = TRENDING_TABS.find((tab) => tab.id === activeTab)?.description;
+const TrendingTabs = ({
+  activeTab,
+  onTabChange,
+  hideSearches = false,
+  detailedDescription = false,
+}) => {
+  const filteredTabs = hideSearches
+    ? TRENDING_TABS.filter((tab) => tab.id !== "searches")
+    : TRENDING_TABS;
+  const activeTabData = TRENDING_TABS.find((tab) => tab.id === activeTab);
+  const activeDescription = detailedDescription
+    ? activeTabData?.detailedDescription
+    : activeTabData?.description;
 
   return (
     <div>
       <div className="trending-tabs">
-        {TRENDING_TABS.map((tab) => (
+        {filteredTabs.map((tab) => (
           <button
             key={tab.id}
             className={`trending-tab ${activeTab === tab.id ? "trending-tab--active" : ""}`}
@@ -21,7 +27,11 @@ const TrendingTabs = ({activeTab, onTabChange}) => {
           </button>
         ))}
       </div>
-      <p className="trending-description">{activeDescription}</p>
+      <p
+        className={`trending-description ${detailedDescription ? "trending-description--detailed" : ""}`}
+      >
+        {activeDescription}
+      </p>
     </div>
   );
 };

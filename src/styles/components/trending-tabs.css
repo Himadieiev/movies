@@ -14,4 +14,8 @@
   .trending-description {
     @apply pl-4 text-gray-400 text-sm mt-2 mb-6;
   }
+
+  .trending-description--detailed {
+    @apply text-center max-w-2xl mx-auto pl-0 mt-6 text-gray-300;
+  }
 }
