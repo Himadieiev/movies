@@ -13,6 +13,7 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 const UnwatchedPage = lazy(() => import("./pages/UnwatchedPage"));
 const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
+const TrendingPage = lazy(() => import("./pages/TrendingPage"));
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -93,6 +94,7 @@ const App = () => {
               <Route path="/favorites" element={<FavoritesPage />} />
               <Route path="/unwatched" element={<UnwatchedPage />} />
               <Route path="/movie/:id" element={<MovieDetailsPage />} />
+              <Route path="/trending" element={<TrendingPage />} />
             </Routes>
           </Suspense>
         </div>
