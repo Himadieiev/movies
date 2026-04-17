@@ -25,6 +25,10 @@
     & .unwatched-icon {
       @apply w-4 h-5 max-xs:w-8 max-xs:h-8;
     }
+
+    & .trending-icon {
+      @apply w-[17px] h-[17px] max-xs:w-[27px] max-xs:h-[27px];
+    }
   }
 
   .nav-link.active {
