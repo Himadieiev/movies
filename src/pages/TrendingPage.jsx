@@ -1,0 +1,175 @@
+import {useState, useEffect} from "react";
+import {useSearchParams, useNavigate} from "react-router-dom";
+
+import {fetchPopularMovies, fetchTrendingMovies, fetchTopRatedMovies} from "../services/tmdb";
+import Spinner from "../components/Spinner";
+import TrendingTabs from "../components/TrendingTabs";
+
+const ITEMS_PER_PAGE = 20;
+
+const TrendingPage = () => {
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "popular");
+
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    setSearchParams({tab: activeTab});
+  }, [activeTab, setSearchParams]);
+
+  useEffect(() => {
+    setMovies([]);
+    setCurrentPage(1);
+    setHasMore(true);
+  }, [activeTab]);
+
+  useEffect(() => {
+    const fetchFirstPage = async () => {
+      setIsLoading(true);
+      setError("");
+
+      try {
+        let data;
+        switch (activeTab) {
+          case "popular":
+            data = await fetchPopularMovies(1);
+            break;
+          case "trending":
+            data = await fetchTrendingMovies("week", 1);
+            break;
+          case "top_rated":
+            data = await fetchTopRatedMovies(1);
+            break;
+          default:
+            data = {results: []};
+        }
+        setMovies(data.results || []);
+        setHasMore((data.results || []).length === ITEMS_PER_PAGE);
+      } catch (err) {
+        setError("Failed to load movies");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchFirstPage();
+  }, [activeTab]);
+
+  const loadMore = async () => {
+    if (isLoadingMore || !hasMore) return;
+
+    setIsLoadingMore(true);
+    const nextPage = currentPage + 1;
+
+    try {
+      let data;
+      switch (activeTab) {
+        case "popular":
+          data = await fetchPopularMovies(nextPage);
+          break;
+        case "trending":
+          data = await fetchTrendingMovies("week", nextPage);
+          break;
+        case "top_rated":
+          data = await fetchTopRatedMovies(nextPage);
+          break;
+        default:
+          data = {results: []};
+      }
+
+      const newMovies = data.results || [];
+      const uniqueNewMovies = newMovies.filter(
+        (newMovie) => !movies.some((existingMovie) => existingMovie.id === newMovie.id),
+      );
+
+      setMovies((prev) => [...prev, ...uniqueNewMovies]);
+      setCurrentPage(nextPage);
+      setHasMore(newMovies.length === ITEMS_PER_PAGE);
+    } catch (err) {
+      console.error("Failed to load more movies", err);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  };
+
+  const handleMovieClick = (movieId) => {
+    navigate(`/movie/${movieId}`);
+  };
+
+  return (
+    <>
+      <h1 className="text-gradient">Trending Movies</h1>
+      <TrendingTabs
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        hideSearches={true}
+        detailedDescription={true}
+      />
+
+      <section className="trending-page">
+        {isLoading ? (
+          <div className="flex justify-center my-5">
+            <Spinner />
+          </div>
+        ) : error ? (
+          <p className="text-red-500 text-center py-20">{error}</p>
+        ) : movies.length === 0 ? (
+          <p className="text-gray-400 text-center py-20">No movies found.</p>
+        ) : (
+          <>
+            <div className="trending-page-list">
+              {movies.map((movie, index) => {
+                const posterUrl = movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
+                  : "/no-movie.png";
+
+                return (
+                  <div
+                    key={movie.id}
+                    className="trending-page-card"
+                    onClick={() => handleMovieClick(movie.id)}
+                  >
+                    <div className="trending-page-rank">{index + 1}</div>
+                    <img src={posterUrl} alt={movie.title} className="trending-page-poster" />
+                    <div className="trending-page-info">
+                      <h3>{movie.title}</h3>
+                      <div className="trending-page-meta">
+                        <div className="trending-rating">
+                          <img src="/star.svg" alt="Star Icon" />
+                          <span>{movie.vote_average?.toFixed(1)}</span>
+                        </div>
+                        <span>{movie.release_date?.split("-")[0]}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {hasMore && (
+              <div className="trending-page-loadmore">
+                <button
+                  onClick={loadMore}
+                  disabled={isLoadingMore}
+                  className="trending-loadmore-btn"
+                >
+                  {isLoadingMore ? "Loading..." : "Load More"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </>
+  );
+};
+
+export default TrendingPage;

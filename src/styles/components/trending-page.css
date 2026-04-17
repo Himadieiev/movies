@@ -1,0 +1,49 @@
+@layer components {
+  .trending-page {
+    @apply mt-4 sm:mt-10;
+  }
+
+  .trending-page-list {
+    @apply flex flex-col gap-4 mb-10;
+  }
+
+  .trending-page-card {
+    @apply flex items-center gap-3 xs:gap-4 p-4 bg-dark-100 rounded-xl cursor-pointer transition-all duration-200 hover:bg-purple-950;
+  }
+
+  .trending-page-rank {
+    @apply w-8 xs:w-12 text-center text-lg xs:text-3xl font-bold text-white;
+  }
+
+  .trending-page-poster {
+    @apply w-20 h-30 sm:w-16 sm:h-24 object-cover rounded-lg;
+  }
+
+  .trending-page-info {
+    @apply flex-1;
+  }
+
+  .trending-page-info h3 {
+    @apply text-white font-semibold text-sm sm:text-lg mb-1;
+  }
+
+  .trending-page-meta {
+    @apply hidden xs:flex gap-4 text-sm text-gray-400;
+  }
+
+  .trending-rating {
+    @apply flex justify-center items-center gap-1;
+  }
+
+  & .trending-rating img {
+    @apply size-4 object-contain;
+  }
+
+  .trending-page-loadmore {
+    @apply flex justify-center mt-8;
+  }
+
+  .trending-loadmore-btn {
+    @apply px-4 py-2 text-sm xs:text-base xs:px-6 xs:py-2 bg-dark-100 text-white rounded-lg hover:bg-purple-950 border border-gray-700 shadow-poster transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+}
