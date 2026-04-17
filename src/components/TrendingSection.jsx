@@ -56,10 +56,25 @@ const TrendingSection = () => {
     navigate(`/movie/${movieId}`);
   };
 
+  const handleViewAll = () => {
+    if (activeTab !== "searches") {
+      navigate(`/trending?tab=${activeTab}`);
+    }
+  };
+
   return (
     <section className="trending">
-      <h2>Trending Movies</h2>
-      <TrendingTabs activeTab={activeTab} onTabChange={setActiveTab} />
+      <div className="title-wrapper">
+        <h2>Trending Movies</h2>
+
+        {activeTab !== "searches" && (
+          <button className="view-all-btn" onClick={handleViewAll}>
+            View all →
+          </button>
+        )}
+      </div>
+
+      <TrendingTabs activeTab={activeTab} onTabChange={setActiveTab} hideSearches={false} />
 
       <div className="trending-content">
         {isLoading ? (

@@ -2,6 +2,14 @@
   .trending {
     @apply mt-20;
 
+    & .title-wrapper {
+      @apply flex flex-wrap justify-between items-center gap-2;
+    }
+
+    & .view-all-btn {
+      @apply text-white font-medium hover:bg-purple-950 text-sm bg-dark-100 px-4 py-2 rounded-full cursor-pointer transition-all;
+    }
+
     & .trending-content {
       @apply h-[260px] flex items-center justify-center;
     }
