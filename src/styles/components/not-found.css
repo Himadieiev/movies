@@ -1,0 +1,17 @@
+@layer components {
+  .not-found-wrapper {
+    @apply text-center py-10;
+
+    & h2 {
+      @apply text-2xl text-white mb-4;
+    }
+
+    & p {
+      @apply text-gray-400 mb-8;
+    }
+  }
+
+  .not-found-link {
+    @apply block px-6 py-2 w-50 mx-auto bg-purple-900 text-white rounded-lg hover:bg-purple-950 transition-all;
+  }
+}

@@ -12,6 +12,7 @@ const FavoritesPage = lazy(() => import("./pages/FavoritesPage"));
 const UnwatchedPage = lazy(() => import("./pages/UnwatchedPage"));
 const MovieDetailsPage = lazy(() => import("./pages/MovieDetailsPage"));
 const TrendingPage = lazy(() => import("./pages/TrendingPage"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
               <Route path="/unwatched" element={<UnwatchedPage />} />
               <Route path="/movie/:id" element={<MovieDetailsPage />} />
               <Route path="/trending" element={<TrendingPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
         </div>
