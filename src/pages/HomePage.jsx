@@ -10,8 +10,6 @@ import SearchHistory from "../components/SearchHistory";
 const DEBOUNCE_DELAY = 500;
 
 const HomePage = ({
-  searchTerm,
-  setSearchTerm,
   onPageChange,
   movieList,
   isLoading,
@@ -21,6 +19,8 @@ const HomePage = ({
   totalPages,
   setPage,
 }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const {history, addToHistory, removeFromHistory, clearHistory} = useSearchHistory();
   const [showHistory, setShowHistory] = useState(false);
   const containerRef = useRef(null);

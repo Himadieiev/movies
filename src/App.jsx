@@ -17,7 +17,6 @@ const TrendingPage = lazy(() => import("./pages/TrendingPage"));
 
 const App = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
 
   const [movieList, setMovieList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -77,8 +76,6 @@ const App = () => {
                 path="/"
                 element={
                   <HomePage
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
                     movieList={movieList}
                     isLoading={isLoading}
                     errorMessage={errorMessage}
