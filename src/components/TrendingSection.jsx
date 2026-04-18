@@ -77,11 +77,19 @@ const TrendingSection = () => {
   return (
     <section className="trending">
       <div className="title-wrapper">
-        <h2>Trending Movies</h2>
+        <h2 className="leading-normal">Trending Movies</h2>
 
         {activeTab !== "searches" && (
-          <button className="view-all-btn" onClick={handleViewAll}>
-            View all →
+          <button className="view-all-btn" onClick={handleViewAll} title="View all">
+            <span className="max-xs:hidden">View all</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              stroke="white"
+              strokeWidth="2"
+            >
+              <polygon points="16.172 9 10.101 2.929 11.515 1.515 20 10 19.293 10.707 11.515 18.485 10.101 17.071 16.172 11 0 11 0 9" />
+            </svg>
           </button>
         )}
       </div>
