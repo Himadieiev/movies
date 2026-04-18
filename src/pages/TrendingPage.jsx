@@ -7,6 +7,7 @@ import Spinner from "../components/Spinner";
 import TrendingTabs from "../components/TrendingTabs";
 
 const ITEMS_PER_PAGE = 20;
+const VALID_TABS = ["popular", "trending", "top_rated"];
 
 const fetchMoviesByTab = async (tab, page) => {
   switch (tab) {
@@ -34,7 +35,10 @@ const TrendingPage = () => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState(searchParams.get("tab") || "popular");
+  const tabParam = searchParams.get("tab");
+
+  const validTab = tabParam && VALID_TABS.includes(tabParam) ? tabParam : VALID_TABS[0];
+  const [activeTab, setActiveTab] = useState(validTab);
 
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
