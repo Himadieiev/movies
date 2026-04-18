@@ -1,11 +1,34 @@
 import {useState, useEffect} from "react";
 import {useSearchParams, useNavigate} from "react-router-dom";
 
+import {TMDB_IMAGE_BASE_URL} from "../constants/images";
 import {fetchPopularMovies, fetchTrendingMovies, fetchTopRatedMovies} from "../services/tmdb";
 import Spinner from "../components/Spinner";
 import TrendingTabs from "../components/TrendingTabs";
 
 const ITEMS_PER_PAGE = 20;
+
+const fetchMoviesByTab = async (tab, page) => {
+  switch (tab) {
+    case "popular":
+      return await fetchPopularMovies(page);
+    case "trending":
+      return await fetchTrendingMovies("week", page);
+    case "top_rated":
+      return await fetchTopRatedMovies(page);
+    default:
+      return {results: []};
+  }
+};
+
+const filterUniqueMovies = (newMovies, existingMovies) => {
+  const existingIds = new Set(existingMovies.map((m) => m.id));
+  return newMovies.filter((movie) => !existingIds.has(movie.id));
+};
+
+const getPosterUrl = (posterPath) => {
+  return posterPath ? `${TMDB_IMAGE_BASE_URL}/w200${posterPath}` : "/no-movie.png";
+};
 
 const TrendingPage = () => {
   const navigate = useNavigate();
@@ -36,20 +59,7 @@ const TrendingPage = () => {
       setError("");
 
       try {
-        let data;
-        switch (activeTab) {
-          case "popular":
-            data = await fetchPopularMovies(1);
-            break;
-          case "trending":
-            data = await fetchTrendingMovies("week", 1);
-            break;
-          case "top_rated":
-            data = await fetchTopRatedMovies(1);
-            break;
-          default:
-            data = {results: []};
-        }
+        const data = await fetchMoviesByTab(activeTab, 1);
         setMovies(data.results || []);
         setHasMore((data.results || []).length === ITEMS_PER_PAGE);
       } catch (err) {
@@ -70,25 +80,10 @@ const TrendingPage = () => {
     const nextPage = currentPage + 1;
 
     try {
-      let data;
-      switch (activeTab) {
-        case "popular":
-          data = await fetchPopularMovies(nextPage);
-          break;
-        case "trending":
-          data = await fetchTrendingMovies("week", nextPage);
-          break;
-        case "top_rated":
-          data = await fetchTopRatedMovies(nextPage);
-          break;
-        default:
-          data = {results: []};
-      }
+      const data = await fetchMoviesByTab(activeTab, nextPage);
 
       const newMovies = data.results || [];
-      const uniqueNewMovies = newMovies.filter(
-        (newMovie) => !movies.some((existingMovie) => existingMovie.id === newMovie.id),
-      );
+      const uniqueNewMovies = filterUniqueMovies(newMovies, movies);
 
       setMovies((prev) => [...prev, ...uniqueNewMovies]);
       setCurrentPage(nextPage);
@@ -126,32 +121,34 @@ const TrendingPage = () => {
         ) : (
           <>
             <div className="trending-page-list">
-              {movies.map((movie, index) => {
-                const posterUrl = movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                  : "/no-movie.png";
-
-                return (
-                  <div
-                    key={movie.id}
-                    className="trending-page-card"
-                    onClick={() => handleMovieClick(movie.id)}
-                  >
-                    <div className="trending-page-rank">{index + 1}</div>
-                    <img src={posterUrl} alt={movie.title} className="trending-page-poster" />
-                    <div className="trending-page-info">
-                      <h3>{movie.title}</h3>
-                      <div className="trending-page-meta">
-                        <div className="trending-rating">
-                          <img src="/star.svg" alt="Star Icon" />
-                          <span>{movie.vote_average?.toFixed(1)}</span>
-                        </div>
-                        <span>{movie.release_date?.split("-")[0]}</span>
+              {movies.map((movie, index) => (
+                <div
+                  key={movie.id}
+                  className="trending-page-card"
+                  onClick={() => handleMovieClick(movie.id)}
+                >
+                  <div className="trending-page-rank">{index + 1}</div>
+                  <img
+                    className="trending-page-poster"
+                    src={getPosterUrl(movie.poster_path)}
+                    alt={movie.title}
+                    width={64}
+                    height={96}
+                    decoding="async"
+                    loading="lazy"
+                  />
+                  <div className="trending-page-info">
+                    <h3>{movie.title}</h3>
+                    <div className="trending-page-meta">
+                      <div className="trending-rating">
+                        <img src="/star.svg" alt="Star Icon" />
+                        <span>{movie.vote_average?.toFixed(1)}</span>
                       </div>
+                      <span>{movie.release_date?.split("-")[0]}</span>
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
 
             {hasMore && (

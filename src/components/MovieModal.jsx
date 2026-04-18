@@ -1,8 +1,10 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
+import {TMDB_IMAGE_BASE_URL} from "../constants/images";
+import {STORAGE_KEYS} from "../constants/storageKeys";
 import {formatDateUA} from "../utils/helpers";
-import {getItems, toggleItem, STORAGE_KEYS} from "../services/storage";
+import {getItems, toggleItem} from "../services/storage";
 import {useModal} from "../hooks/useModal";
 
 const MovieModal = ({movie, onClose}) => {
@@ -44,12 +46,12 @@ const MovieModal = ({movie, onClose}) => {
 
         <div className="modal-layout">
           <img
-            src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : "/no-movie.png"}
-            alt={title}
             className="modal-poster"
-            decoding="async"
+            src={poster_path ? `${TMDB_IMAGE_BASE_URL}/w500/${poster_path}` : "/no-movie.png"}
+            alt={title}
             width="128"
             height="192"
+            decoding="async"
           />
 
           <div className="modal-details">

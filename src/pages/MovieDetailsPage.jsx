@@ -1,23 +1,12 @@
 import {useState, useEffect} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 
-import {formatDate, formatRuntime} from "../utils/helpers";
+import {TMDB_IMAGE_BASE_URL} from "../constants/images";
+import {formatDate, formatRuntime, getTrailerKey} from "../utils/helpers";
 import {fetchMovieDetails} from "../services/tmdb";
 import Spinner from "../components/Spinner";
 
-const getTrailerKey = (videos) => {
-  if (!videos?.results) return null;
-
-  const officialTrailer = videos.results.find(
-    (video) => video.type === "Trailer" && video.official === true,
-  );
-
-  const anyTrailer = videos.results.find(
-    (video) => video.type === "Trailer" || video.type === "Teaser",
-  );
-
-  return officialTrailer?.key || anyTrailer?.key;
-};
+const CAST_LIMIT = 12;
 
 const MovieDetailsPage = () => {
   const {id} = useParams();
@@ -48,7 +37,7 @@ const MovieDetailsPage = () => {
 
   const trailerKey = movie ? getTrailerKey(movie.videos) : null;
   const director = movie?.credits?.crew?.find((person) => person.job === "Director");
-  const cast = movie?.credits?.cast?.slice(0, 12);
+  const cast = movie?.credits?.cast?.slice(0, CAST_LIMIT);
 
   if (isLoading) {
     return (
@@ -78,16 +67,16 @@ const MovieDetailsPage = () => {
 
       <div className="movie-details-header">
         <img
+          className="movie-details-poster"
           src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-              : "/no-movie.png"
+            movie.poster_path ? `${TMDB_IMAGE_BASE_URL}/w500/${movie.poster_path}` : "/no-movie.png"
           }
           alt={movie.title}
-          className="movie-details-poster"
+          width="256"
+          height="384"
           loading="eager"
-          width="300"
-          height="450"
+          fetchPriority="high"
+          decoding="async"
         />
 
         <div className="movie-details-info">
@@ -147,9 +136,12 @@ const MovieDetailsPage = () => {
               <li key={actor.id} className="cast-card">
                 {actor.profile_path ? (
                   <img
-                    src={`https://image.tmdb.org/t/p/w185/${actor.profile_path}`}
+                    src={`${TMDB_IMAGE_BASE_URL}/w185/${actor.profile_path}`}
                     alt={actor.name}
+                    width={161}
+                    height={242}
                     loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div className="no-avatar">No photo</div>

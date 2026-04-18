@@ -1,10 +1,13 @@
 import {useState, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
+import {TMDB_IMAGE_BASE_URL} from "../constants/images";
 import {fetchPopularMovies, fetchTrendingMovies, fetchTopRatedMovies} from "../services/tmdb";
 import {getTrendingMovies as getLocalTrendingMovies} from "../services/appwrite";
 import Spinner from "./Spinner";
 import TrendingTabs from "./TrendingTabs";
+
+const DISPLAY_LIMIT = 5;
 
 const TrendingSection = () => {
   const navigate = useNavigate();
@@ -62,6 +65,15 @@ const TrendingSection = () => {
     }
   };
 
+  const getPosterUrl = (movie, isSearches) => {
+    const imagePath = isSearches ? movie.poster_url : movie.poster_path;
+
+    if (imagePath && typeof imagePath === "string" && !imagePath.includes("null")) {
+      return isSearches ? imagePath : `${TMDB_IMAGE_BASE_URL}/w500${imagePath}`;
+    }
+    return null;
+  };
+
   return (
     <section className="trending">
       <div className="title-wrapper">
@@ -85,23 +97,26 @@ const TrendingSection = () => {
           <p className="text-gray-400">No movies yet.</p>
         ) : (
           <ul className={movies.length < 5 ? "justify-start" : "justify-between"}>
-            {movies.slice(0, 5).map((movie, index) => {
+            {movies.slice(0, DISPLAY_LIMIT).map((movie, index) => {
               const isSearches = activeTab === "searches";
               const movieId = isSearches ? movie.movie_id : movie.id;
               const movieKey = isSearches ? movie.$id || index : movie.id || index;
-              let posterUrl = null;
-              const imagePath = isSearches ? movie.poster_url : movie.poster_path;
-
-              if (imagePath && typeof imagePath === "string" && !imagePath.includes("null")) {
-                posterUrl = isSearches ? imagePath : `https://image.tmdb.org/t/p/w500${imagePath}`;
-              }
+              const posterUrl = getPosterUrl(movie, isSearches);
               const title = isSearches ? movie.movie_title : movie.title;
 
               return (
                 <li key={movieKey}>
                   <p>{index + 1}</p>
                   {posterUrl ? (
-                    <img src={posterUrl} alt={title} onClick={() => handleMovieClick(movieId)} />
+                    <img
+                      src={posterUrl}
+                      alt={title}
+                      width={127}
+                      height={170}
+                      loading="lazy"
+                      decoding="async"
+                      onClick={() => handleMovieClick(movieId)}
+                    />
                   ) : (
                     <div className="no-poster" onClick={() => handleMovieClick(movieId)}>
                       <span>No Poster</span>

@@ -10,12 +10,13 @@ const Header = () => {
     <header>
       <Navigation />
       <img
+        className={isDetailsPage ? "hidden" : ""}
         src="/hero.png"
         alt="Hero Banner"
         width={512}
-        height={476}
-        loading="lazy"
-        className={isDetailsPage ? "hidden" : ""}
+        height={285}
+        loading="eager"
+        fetchPriority="high"
       />
     </header>
   );

@@ -1,13 +1,14 @@
 import {useState, useEffect} from "react";
 
-const STORAGE_KEY = "search_history";
-const MAX_HISTORY = 5;
+import {STORAGE_KEYS} from "../constants/storageKeys";
+
+const MAX_HISTORY_ITEMS = 5;
 
 export const useSearchHistory = () => {
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = localStorage.getItem(STORAGE_KEYS.SEARCH_HISTORY);
     if (saved) {
       try {
         // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -23,8 +24,8 @@ export const useSearchHistory = () => {
 
     setHistory((prev) => {
       const filtered = prev.filter((item) => item !== term);
-      const newHistory = [term, ...filtered].slice(0, MAX_HISTORY);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
+      const newHistory = [term, ...filtered].slice(0, MAX_HISTORY_ITEMS);
+      localStorage.setItem(STORAGE_KEYS.SEARCH_HISTORY, JSON.stringify(newHistory));
       return newHistory;
     });
   };
@@ -32,14 +33,14 @@ export const useSearchHistory = () => {
   const removeFromHistory = (term) => {
     setHistory((prev) => {
       const newHistory = prev.filter((item) => item !== term);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory));
+      localStorage.setItem(STORAGE_KEYS.SEARCH_HISTORY, JSON.stringify(newHistory));
       return newHistory;
     });
   };
 
   const clearHistory = () => {
     setHistory([]);
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEYS.SEARCH_HISTORY);
   };
 
   return {history, addToHistory, removeFromHistory, clearHistory};

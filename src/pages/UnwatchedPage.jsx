@@ -1,7 +1,9 @@
 import {useState, useEffect, useMemo} from "react";
 
+import {TMDB_IMAGE_BASE_URL} from "../constants/images";
+import {STORAGE_KEYS} from "../constants/storageKeys";
 import {formatDate, truncateOverview, handleKeyDown} from "../utils/helpers";
-import {getItems, STORAGE_KEYS} from "../services/storage";
+import {getItems} from "../services/storage";
 import MovieModal from "../components/MovieModal";
 import ConfirmModal from "../components/ConfirmModal";
 import TableSearch from "../components/TableSearch";
@@ -203,9 +205,13 @@ const UnwatchedPage = () => {
                         <td className="unwatched-poster-cell">
                           {movie.poster_path ? (
                             <img
-                              src={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
-                              alt={movie.title}
                               className="unwatched-poster"
+                              src={`${TMDB_IMAGE_BASE_URL}/w92/${movie.poster_path}`}
+                              alt={movie.title}
+                              width={43}
+                              height={64}
+                              loading="lazy"
+                              decoding="async"
                             />
                           ) : (
                             <div className="unwatched-no-poster">No poster</div>

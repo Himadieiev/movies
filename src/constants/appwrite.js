@@ -1,0 +1,5 @@
+export const APPWRITE_CONFIG = {
+  PROJECT_ID: import.meta.env.VITE_APPWRITE_PROJECT_ID,
+  DATABASE_ID: import.meta.env.VITE_APPWRITE_DATABASE_ID,
+  TABLE_ID: import.meta.env.VITE_APPWRITE_TABLE_ID,
+};

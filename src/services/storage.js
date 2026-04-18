@@ -1,8 +1,3 @@
-export const STORAGE_KEYS = {
-  FAVORITES: "favorite_movies",
-  UNWATCHED: "unwatched_movies",
-};
-
 export const getItems = (key) => {
   try {
     return JSON.parse(localStorage.getItem(key)) || [];

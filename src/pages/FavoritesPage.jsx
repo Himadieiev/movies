@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 
-import {getItems, STORAGE_KEYS} from "../services/storage";
+import {STORAGE_KEYS} from "../constants/storageKeys";
+import {getItems} from "../services/storage";
 import MovieCard from "../components/MovieCard";
 import MovieModal from "../components/MovieModal";
 

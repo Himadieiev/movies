@@ -1,17 +1,20 @@
 import {useState, useEffect, useRef} from "react";
 
+const SCROLL_THRESHOLD = 150;
+const HIDE_DELAY = 1500;
+
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
   const timeoutRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 150) {
+      if (window.scrollY > SCROLL_THRESHOLD) {
         setIsVisible(true);
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(() => {
           setIsVisible(false);
-        }, 1500);
+        }, HIDE_DELAY);
       } else {
         setIsVisible(false);
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -34,10 +37,10 @@ const ScrollToTopButton = () => {
   };
 
   const handleTouchEnd = () => {
-    if (window.scrollY > 150) {
+    if (window.scrollY > SCROLL_THRESHOLD) {
       timeoutRef.current = setTimeout(() => {
         setIsVisible(false);
-      }, 1500);
+      }, HIDE_DELAY);
     }
   };
 
@@ -49,10 +52,10 @@ const ScrollToTopButton = () => {
           if (timeoutRef.current) clearTimeout(timeoutRef.current);
         }}
         onMouseLeave={() => {
-          if (window.scrollY > 150) {
+          if (window.scrollY > SCROLL_THRESHOLD) {
             timeoutRef.current = setTimeout(() => {
               setIsVisible(false);
-            }, 1500);
+            }, HIDE_DELAY);
           }
         }}
         onTouchStart={handleTouchStart}

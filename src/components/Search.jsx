@@ -20,7 +20,7 @@ const Search = forwardRef(({searchTerm, setSearchTerm, onFocus}, ref) => {
   return (
     <div className="search">
       <div>
-        <img src="/search.svg" alt="search" />
+        <img src="/search.svg" alt="Search Icon" />
 
         <input
           ref={ref}

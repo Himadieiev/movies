@@ -7,6 +7,8 @@ import AllMoviesSection from "../components/AllMoviesSection";
 import Search from "../components/Search";
 import SearchHistory from "../components/SearchHistory";
 
+const DEBOUNCE_DELAY = 500;
+
 const HomePage = ({
   searchTerm,
   setSearchTerm,
@@ -30,7 +32,7 @@ const HomePage = ({
 
       if (searchTerm.trim()) addToHistory(searchTerm);
     },
-    500,
+    DEBOUNCE_DELAY,
     [searchTerm],
   );
 

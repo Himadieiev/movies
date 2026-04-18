@@ -30,3 +30,17 @@ export const handleKeyDown = (callback) => (e) => {
     callback();
   }
 };
+
+export const getTrailerKey = (videos) => {
+  if (!videos?.results) return null;
+
+  const officialTrailer = videos.results.find(
+    (video) => video.type === "Trailer" && video.official === true,
+  );
+
+  const anyTrailer = videos.results.find(
+    (video) => video.type === "Trailer" || video.type === "Teaser",
+  );
+
+  return officialTrailer?.key || anyTrailer?.key;
+};

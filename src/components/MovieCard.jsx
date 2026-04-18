@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 
-import {getItems, STORAGE_KEYS, toggleItem} from "../services/storage";
+import {TMDB_IMAGE_BASE_URL} from "../constants/images";
+import {STORAGE_KEYS} from "../constants/storageKeys";
+import {getItems, toggleItem} from "../services/storage";
 
 const MovieCard = ({movie, index, onClick}) => {
   const {title, vote_average, poster_path, release_date, original_language} = movie;
@@ -175,10 +177,10 @@ const MovieCard = ({movie, index, onClick}) => {
       </div>
 
       <img
-        src={poster_path ? `https://image.tmdb.org/t/p/w500/${poster_path}` : "/no-movie.png"}
+        src={poster_path ? `${TMDB_IMAGE_BASE_URL}/w500/${poster_path}` : "/no-movie.png"}
         alt={title}
-        width="243"
-        height="364"
+        width="245"
+        height="368"
         loading="lazy"
         decoding="async"
       />
