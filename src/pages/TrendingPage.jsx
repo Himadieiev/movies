@@ -5,6 +5,7 @@ import {TMDB_IMAGE_BASE_URL} from "../constants/images";
 import {fetchPopularMovies, fetchTrendingMovies, fetchTopRatedMovies} from "../services/tmdb";
 import Spinner from "../components/Spinner";
 import TrendingTabs from "../components/TrendingTabs";
+import TrendingPageSkeleton from "../components/TrendingPageSkeleton";
 
 const ITEMS_PER_PAGE = 20;
 const VALID_TABS = ["popular", "trending", "top_rated"];
@@ -115,9 +116,7 @@ const TrendingPage = () => {
 
       <section className="trending-page">
         {isLoading ? (
-          <div className="flex justify-center my-5">
-            <Spinner />
-          </div>
+          <TrendingPageSkeleton />
         ) : error ? (
           <p className="text-red-500 text-center py-20">{error}</p>
         ) : movies.length === 0 ? (
