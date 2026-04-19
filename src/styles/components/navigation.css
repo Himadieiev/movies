@@ -3,6 +3,14 @@
     @apply flex items-center gap-x-5 gap-y-1 flex-wrap max-xs:justify-center;
   }
 
+  .nav-wrapper {
+    @apply flex flex-col items-center;
+  }
+
+  .nav-active-text {
+    @apply hidden max-xs:block max-xs:text-xs max-xs:text-purple-500 underline underline-offset-4 max-xs:text-center max-xs:mt-2 max-xs:h-5;
+  }
+
   .back-button {
     @apply flex items-center gap-1 text-gray-400 text-lg font-semibold hover:text-white transition-colors cursor-pointer relative;
   }
@@ -47,17 +55,5 @@
   .nav-link span,
   .back-button span {
     @apply max-xs:sr-only;
-  }
-
-  .nav-link::before,
-  .back-button::before {
-    @apply max-xs:content-[attr(data-tooltip)] max-xs:absolute max-xs:-bottom-8 max-xs:left-1/2 max-xs:-translate-x-1/2 max-xs:px-2 max-xs:py-1 max-xs:bg-dark-100 max-xs:text-white max-xs:text-xs max-xs:rounded max-xs:whitespace-nowrap max-xs:opacity-0 max-xs:pointer-events-none max-xs:transition-opacity max-xs:duration-200 max-xs:z-50;
-  }
-
-  .nav-link:hover::before,
-  .nav-link:focus-visible::before,
-  .back-button:hover::before,
-  .back-button:focus-visible::before {
-    @apply max-xs:opacity-100;
   }
 }
