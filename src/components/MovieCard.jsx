@@ -76,6 +76,7 @@ const MovieCard = ({movie, index, onClick}) => {
         >
           {isFavorite ? (
             <svg
+              className="favorite-icon"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 615.433 615.433"
@@ -99,6 +100,7 @@ const MovieCard = ({movie, index, onClick}) => {
             </svg>
           ) : (
             <svg
+              className="favorite-icon"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 615.433 615.433"
