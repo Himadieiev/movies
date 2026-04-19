@@ -16,6 +16,6 @@
   }
 
   .trending-description--detailed {
-    @apply text-center max-w-2xl mx-auto pl-0 mt-6 text-gray-300;
+    @apply flex items-center text-center max-w-2xl mx-auto pl-0 mt-4 mb-4 text-gray-300 h-[60px] max-xs:h-[100px] max-xxs:h-auto;
   }
 }

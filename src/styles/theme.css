@@ -19,6 +19,7 @@
   --font-bebas: Bebas Neue, sans-serif;
 
   --breakpoint-xs: 480px;
+  --breakpoint-xxs: 320px;
 
   --background-image-hero-pattern: url("/hero-bg.png");
 
