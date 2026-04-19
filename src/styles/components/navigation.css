@@ -8,7 +8,7 @@
   }
 
   .nav-active-text {
-    @apply hidden max-xs:block max-xs:text-xs max-xs:text-purple-500 underline underline-offset-4 max-xs:text-center max-xs:mt-2 max-xs:h-5;
+    @apply hidden max-xs:block max-xs:text-xs max-xs:text-white underline underline-offset-4 max-xs:text-center max-xs:mt-2 max-xs:h-5;
   }
 
   .back-button {
