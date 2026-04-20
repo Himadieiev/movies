@@ -54,3 +54,13 @@ export const fetchMovieDetails = async (id) => {
 
   return response.json();
 };
+
+export const fetchUpcomingMovies = async (page = 1) => {
+  const endpoint = `${API_BASE_URL}/movie/upcoming?page=${page}`;
+
+  const response = await fetch(endpoint, API_OPTIONS);
+
+  if (!response.ok) throw new Error("Failed to fetch upcoming movies");
+
+  return response.json();
+};
