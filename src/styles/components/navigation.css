@@ -1,6 +1,6 @@
 @layer components {
   .nav {
-    @apply flex items-center gap-x-5 gap-y-1 flex-wrap max-xs:justify-center;
+    @apply flex items-center max-xxs:gap-x-3 gap-x-5 gap-y-2 flex-wrap max-xs:justify-center;
   }
 
   .nav-wrapper {

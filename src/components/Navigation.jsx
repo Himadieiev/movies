@@ -12,6 +12,8 @@ const Navigation = () => {
     if (path === "/unwatched") return "Unwatched";
     if (path === "/trending") return "Trending";
     if (path === "/upcoming") return "Upcoming";
+    if (path.startsWith("/movie/")) return "Movie Details";
+
     return "";
   };
 
