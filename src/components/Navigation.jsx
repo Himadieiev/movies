@@ -11,6 +11,7 @@ const Navigation = () => {
     if (path === "/favorites") return "Favorites";
     if (path === "/unwatched") return "Unwatched";
     if (path === "/trending") return "Trending";
+    if (path === "/upcoming") return "Upcoming";
     return "";
   };
 
@@ -120,6 +121,25 @@ const Navigation = () => {
           </svg>
 
           <span>Trending</span>
+        </NavLink>
+        <NavLink
+          to="/upcoming"
+          data-tooltip="Upcoming"
+          className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="upcoming-icon"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span>Upcoming</span>
         </NavLink>
       </nav>
 

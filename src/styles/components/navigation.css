@@ -37,6 +37,10 @@
     & .trending-icon {
       @apply w-[17px] h-[17px] max-xs:w-[27px] max-xs:h-[27px];
     }
+
+    & .upcoming-icon {
+      @apply w-4 h-4 max-xs:w-[27px] max-xs:h-[27px];
+    }
   }
 
   .nav-link.active {
