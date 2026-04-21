@@ -5,12 +5,13 @@ import Navigation from "./Navigation";
 const Header = () => {
   const location = useLocation();
   const isDetailsPage = location.pathname.startsWith("/movie/");
+  const isNotFoundPage = location.pathname === "/not-found";
 
   return (
     <header>
       <Navigation />
       <img
-        className={isDetailsPage ? "hidden" : ""}
+        className={isDetailsPage || isNotFoundPage ? "hidden" : ""}
         src="/hero.png"
         alt="Hero Banner"
         width={512}

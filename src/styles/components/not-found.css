@@ -1,9 +1,13 @@
 @layer components {
   .not-found-wrapper {
-    @apply text-center py-10;
+    @apply text-center max-sm:py-15 py-50;
+
+    & h1 {
+      @apply text-6xl max-sm:text-5xl;
+    }
 
     & h2 {
-      @apply text-2xl text-white mb-4;
+      @apply text-2xl max-sm:text-xl text-white mb-4;
     }
 
     & p {
@@ -12,6 +16,6 @@
   }
 
   .not-found-link {
-    @apply block px-6 py-2 w-50 mx-auto bg-purple-900 text-white rounded-lg hover:bg-purple-950 transition-all;
+    @apply block px-5 py-2 w-fit mx-auto bg-purple-900 text-white max-sm:text-sm rounded-lg hover:bg-purple-950 transition-all;
   }
 }

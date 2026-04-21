@@ -1,5 +1,5 @@
 import {lazy, Suspense} from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 import MovieModal from "./components/MovieModal";
 import Header from "./components/Header";
@@ -37,7 +37,8 @@ const App = () => {
               <Route path="/movie/:id" element={<MovieDetailsPage />} />
               <Route path="/trending" element={<TrendingPage />} />
               <Route path="/upcoming" element={<UpcomingPage />} />
-              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/not-found" element={<NotFoundPage />} />
+              <Route path="*" element={<Navigate to="/not-found" replace />} />
             </Routes>
           </Suspense>
         </div>
