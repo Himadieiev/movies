@@ -1,4 +1,5 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect, useRef, useMemo} from "react";
+import {useQuery} from "@tanstack/react-query";
 
 import {fetchUpcomingMovies} from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
@@ -7,15 +8,20 @@ import Pagination from "../components/Pagination";
 import MoviesGrid from "../components/MoviesGrid";
 
 const UpcomingPage = () => {
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   const titleRef = useRef(null);
   const pendingScroll = useRef(false);
+
+  const {data, isLoading, error} = useQuery({
+    queryKey: ["upcoming", page],
+    queryFn: () => fetchUpcomingMovies(page),
+    keepPreviousData: true,
+  });
+
+  const movies = useMemo(() => data?.results || [], [data]);
+  const totalPages = data?.total_pages || 1;
 
   const handlePageChange = (newPage) => {
     if (newPage !== page) {
@@ -25,31 +31,11 @@ const UpcomingPage = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError("");
-
-      try {
-        const data = await fetchUpcomingMovies(page);
-        setMovies(data.results || []);
-        setTotalPages(data.total_pages || 1);
-      } catch (err) {
-        setError("Failed to load upcoming movies");
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [page]);
-
-  useEffect(() => {
-    if (pendingScroll.current && !isLoading) {
+    if (pendingScroll.current) {
       pendingScroll.current = false;
       titleRef.current?.scrollIntoView({behavior: "smooth", block: "start"});
     }
-  }, [isLoading]);
+  }, [movies]);
 
   return (
     <>

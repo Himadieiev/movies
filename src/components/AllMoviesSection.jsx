@@ -24,11 +24,11 @@ const AllMoviesSection = ({
   };
 
   useEffect(() => {
-    if (pendingScroll.current && !isLoading) {
+    if (pendingScroll.current) {
       pendingScroll.current = false;
       sectionRef.current?.scrollIntoView({behavior: "smooth", block: "start"});
     }
-  }, [isLoading]);
+  }, [movieList]);
 
   return (
     <section className="all-movies" ref={sectionRef}>

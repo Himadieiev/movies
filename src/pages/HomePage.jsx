@@ -1,5 +1,6 @@
 import {useDebounce} from "react-use";
 import {useEffect, useRef, useState} from "react";
+import {useQuery} from "@tanstack/react-query";
 
 import {fetchMoviesFromTMDB} from "../services/tmdb";
 import {updateSearchCount} from "../services/appwrite";
@@ -15,41 +16,25 @@ const DEBOUNCE_DELAY = 500;
 const HomePage = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [movieList, setMovieList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [selectedMovie, setSelectedMovie] = useState(null);
-
-  const {history, addToHistory, removeFromHistory, clearHistory} = useSearchHistory();
   const [showHistory, setShowHistory] = useState(false);
+
   const containerRef = useRef(null);
   const inputRef = useRef(null);
 
-  const fetchMovies = async (query = "", pageNumber = 1) => {
-    setIsLoading(true);
-    setErrorMessage("");
-
-    try {
-      const data = await fetchMoviesFromTMDB(query, pageNumber);
-      setMovieList(data.results || []);
-      setTotalPages(data.total_pages || 1);
-
-      if (query && data.results.length > 0) {
-        await updateSearchCount(query, data.results[0]);
-      }
-    } catch (error) {
-      console.error(`Error fetching movies: ${error}`);
-      setErrorMessage("Error fetching movies. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const {history, addToHistory, removeFromHistory, clearHistory} = useSearchHistory();
 
   const handleSearch = (term) => {
     setDebouncedSearchTerm(term);
     setPage(1);
+  };
+
+  const handleHistoryClick = (term) => {
+    setSearchTerm(term);
+    handleSearch(term);
+    addToHistory(term);
+    setShowHistory(false);
   };
 
   useDebounce(
@@ -61,16 +46,22 @@ const HomePage = () => {
     [searchTerm],
   );
 
-  useEffect(() => {
-    fetchMovies(debouncedSearchTerm, page);
-  }, [debouncedSearchTerm, page]);
+  const {data, isLoading, error} = useQuery({
+    queryKey: ["movies", debouncedSearchTerm, page],
+    queryFn: () => fetchMoviesFromTMDB(debouncedSearchTerm, page),
+    keepPreviousData: true,
+    staleTime: 5 * 60 * 1000,
+  });
 
-  const handleHistoryClick = (term) => {
-    setSearchTerm(term);
-    handleSearch(term);
-    addToHistory(term);
-    setShowHistory(false);
-  };
+  const movieList = data?.results || [];
+  const totalPages = data?.total_pages || 1;
+  const errorMessage = error?.message || "";
+
+  useEffect(() => {
+    if (data?.results?.length > 0 && debouncedSearchTerm) {
+      updateSearchCount(debouncedSearchTerm, data.results[0]);
+    }
+  }, [data, debouncedSearchTerm]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
