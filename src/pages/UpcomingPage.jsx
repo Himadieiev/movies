@@ -51,7 +51,7 @@ const UpcomingPage = () => {
 
       <section className="all-movies pt-8 sm:pt-15">
         {error ? (
-          <p className="text-red-500 text-center py-20">{error}</p>
+          <p className="text-red-500 text-center py-20">{error.message}</p>
         ) : movies.length === 0 && !isLoading ? (
           <p className="text-gray-400 text-center py-20">No upcoming movies found.</p>
         ) : (

@@ -35,7 +35,7 @@ const AllMoviesSection = ({
       <h2 className="mt-10">All Movies</h2>
 
       {errorMessage ? (
-        <p className="text-red-500">{errorMessage}</p>
+        <p className="text-red-500 text-center py-20">{errorMessage}</p>
       ) : movieList.length === 0 && !isLoading ? (
         <p className="text-gray-400 text-center py-20">No movies found. Try another search.</p>
       ) : (

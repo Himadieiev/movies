@@ -7,7 +7,7 @@ const NotFoundPage = () => {
       <h2>Page Not Found</h2>
       <p>The page you are looking for doesn't exist or has been moved.</p>
       <Link className="not-found-link" to="/">
-        Go Back Home
+        Home
       </Link>
     </div>
   );

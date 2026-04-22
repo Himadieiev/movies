@@ -52,7 +52,7 @@ const MovieDetailsPage = () => {
       <div className="text-center py-20">
         <p className="text-red-500">{error || "Movie not found"}</p>
         <button onClick={() => navigate(-1)} className="button-error-back ">
-          Go Back
+          Back
         </button>
       </div>
     );
