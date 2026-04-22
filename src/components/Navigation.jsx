@@ -5,21 +5,9 @@ const Navigation = () => {
   const navigate = useNavigate();
   const isDetailsPage = location.pathname.startsWith("/movie/");
 
-  const getActiveText = () => {
-    const path = location.pathname;
-    if (path === "/") return "Home";
-    if (path === "/favorites") return "Favorites";
-    if (path === "/unwatched") return "Unwatched";
-    if (path === "/trending") return "Trending";
-    if (path === "/upcoming") return "Upcoming";
-    if (path.startsWith("/movie/")) return "Movie Details";
-
-    return "";
-  };
-
   return (
     <div className="nav-wrapper">
-      <nav className="nav">
+      <nav className={`nav ${isDetailsPage ? "movie-details-active" : ""}`}>
         {isDetailsPage && (
           <button onClick={() => navigate(-1)} className="back-button">
             <svg
@@ -56,7 +44,11 @@ const Navigation = () => {
           </svg>
           <span>Home</span>
         </NavLink>
-        <NavLink to="/favorites" className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          data-tooltip="Favorites"
+          to="/favorites"
+          className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+        >
           <svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -82,7 +74,11 @@ const Navigation = () => {
           </svg>
           <span>Favorites</span>
         </NavLink>
-        <NavLink to="/unwatched" className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          data-tooltip="Unwatched"
+          to="/unwatched"
+          className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+        >
           <svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +103,11 @@ const Navigation = () => {
           </svg>
           <span>Unwatched</span>
         </NavLink>
-        <NavLink to="/trending" className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}>
+        <NavLink
+          data-tooltip="Trending"
+          to="/trending"
+          className={({isActive}) => `nav-link ${isActive ? "active" : ""}`}
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -145,7 +145,7 @@ const Navigation = () => {
         </NavLink>
       </nav>
 
-      <div className="nav-active-text">{getActiveText()}</div>
+      {isDetailsPage && <div className="movie-details-text">Movie Details</div>}
     </div>
   );
 };

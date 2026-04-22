@@ -1,14 +1,19 @@
 @layer components {
-  .nav {
-    @apply flex items-center max-xxs:gap-x-3 gap-x-5 gap-y-2 flex-wrap max-xs:justify-center;
-  }
-
   .nav-wrapper {
     @apply flex flex-col items-center;
   }
 
-  .nav-active-text {
-    @apply hidden max-xs:block max-xs:text-xs max-xs:text-white underline underline-offset-4 max-xs:text-center max-xs:mt-2 max-xs:h-5;
+  .nav {
+    @apply flex items-center max-xxs:gap-x-3 gap-x-4.5 gap-y-2 flex-wrap max-xs:justify-center mb-5 relative;
+  }
+
+  .nav.movie-details-active::after {
+    content: "Movie Details";
+    @apply absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-white whitespace-nowrap block xs:hidden;
+  }
+
+  .movie-details-text {
+    @apply hidden text-sm font-semibold text-white text-center underline underline-offset-2 xs:block;
   }
 
   .back-button {
@@ -20,7 +25,7 @@
   }
 
   .nav-link {
-    @apply flex items-center gap-1 text-gray-400 hover:text-white text-lg font-semibold transition-colors relative;
+    @apply flex items-center gap-1 max-sm:h-[32px] text-gray-400 hover:text-white text-lg font-semibold transition-colors relative;
 
     & .favorite-icon {
       @apply w-[15px] h-[13px] max-xs:w-[27px] max-xs:h-[24px];
@@ -54,6 +59,11 @@
     transform: scaleX(0);
     transform-origin: center;
     animation: underlineGrow 0.3s ease forwards;
+  }
+
+  .nav-link.active::before {
+    content: attr(data-tooltip);
+    @apply absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-white whitespace-nowrap block xs:hidden;
   }
 
   .nav-link span,
